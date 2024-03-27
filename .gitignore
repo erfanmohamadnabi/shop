@@ -1,0 +1,8 @@
+/assets
+/db.sqlite3
+/my_dynamic
+/my_static
+/passenger_wsgi.py
+/public
+/tmp
+/__pycache__

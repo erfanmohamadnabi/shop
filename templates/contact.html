@@ -1,0 +1,163 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>تماس با ما</title>{% endblock %}
+
+    <!-- CSS (Font, Vendor, Icon, Plugins & Style CSS files) -->
+
+    <!-- Font CSS -->
+    <!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+    <!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+    <!--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">-->
+
+    <!-- Vendor CSS (Bootstrap & Icon Font) -->
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+<link rel="stylesheet" href="{% static 'css/range-slider.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+        
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+
+    <main class="main-content">
+
+        <!--== Start Contact Area Wrapper ==-->
+        <section class="contact-area">
+            <div class="container">
+                <div class="row">
+                    <div class="offset-lg-6 col-lg-6"  id="col-concat">
+                        <div class="section-title position-relative">
+                            <h2 class="title">در تماس باشید</h2>
+                            <p class="m-0">فرم زیر رو تکمیل کن تا همکاران ما در اسرع وقت بهتون پاسخ بدن !</p>
+                            <div class="line-left-style mt-4 mb-1"></div>
+                        </div>
+                        <!--== Start Contact Form ==-->
+                        <div class="contact-form">
+                            <form id="contact-form" action="" method="POST">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" required name="fname" placeholder="نام کوچک">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" required name="lname" placeholder="نام فامیل">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input class="form-control" type="email" required name="email" placeholder="آدرس ایمیل">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <textarea class="form-control" required name="message" placeholder="پیام"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group mb-0">
+                                            <button class="btn btn-sm" type="submit">ارسال</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--== End Contact Form ==-->
+
+                        <!--== Message Notification ==-->
+                        <!-- <div class="form-message"></div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="contact-left-img" data-bg-img="{% static 'img/banner3.jpg' %}"></div>
+        </section>
+    
+        <section id="form_messages" style="display: none;" class="section-space">
+            <div  class="container">
+                <div style="background-color: #d3ff9d8e;justify-content: center;"  class="contact-info">
+                    <div class="contact-info-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 64 64">
+                            <radialGradient id="c0yjGprCnv9Gl20e9Vf6Ca_118993_gr1" cx="32.5" cy="31.5" r="30.516" gradientUnits="userSpaceOnUse" spreadMethod="reflect"><stop offset="0" stop-color="#afeeff"></stop><stop offset=".193" stop-color="#bbf1ff"></stop><stop offset=".703" stop-color="#d7f8ff"></stop><stop offset="1" stop-color="#e1faff"></stop></radialGradient><path fill="url(#c0yjGprCnv9Gl20e9Vf6Ca_118993_gr1)" d="M59,20h1.5c2.168,0,3.892-1.998,3.422-4.243C63.58,14.122,62.056,13,60.385,13L53,13 c-1.105,0-2-0.895-2-2c0-1.105,0.895-2,2-2h3.385c1.67,0,3.195-1.122,3.537-2.757C60.392,3.998,58.668,2,56.5,2H34.006H32.5h-24 C6.575,2,5,3.575,5,5.5S6.575,9,8.5,9H10c1.105,0,2,0.895,2,2c0,1.105-0.895,2-2,2l-5.385,0c-1.67,0-3.195,1.122-3.537,2.757 C0.608,18.002,2.332,20,4.5,20H18v12L4.615,32c-1.67,0-3.195,1.122-3.537,2.757C0.608,37.002,2.332,39,4.5,39H5c1.105,0,2,0.895,2,2 c0,1.105-0.895,2-2,2H4.5c-2.168,0-3.892,1.998-3.422,4.243C1.42,48.878,2.945,50,4.615,50H10c1.105,0,2,0.895,2,2 c0,1.105-0.895,2-2,2l-1.385,0c-1.67,0-3.195,1.122-3.537,2.757C4.608,59.002,6.332,61,8.5,61h22.494H32.5h23 c1.925,0,3.5-1.575,3.5-3.5S57.425,54,55.5,54H55c-1.105,0-2-0.895-2-2c0-1.105,0.895-2,2-2h4.385c1.67,0,3.195-1.122,3.537-2.757 C63.392,44.998,61.668,43,59.5,43H47V31h12.385c1.67,0,3.195-1.122,3.537-2.757C63.392,25.998,61.668,24,59.5,24H59 c-1.105,0-2-0.895-2-2C57,20.895,57.895,20,59,20z"></path><linearGradient id="c0yjGprCnv9Gl20e9Vf6Cb_118993_gr2" x1="32" x2="32" y1="6" y2="56" gradientUnits="userSpaceOnUse" spreadMethod="reflect"><stop offset="0" stop-color="#42d778"></stop><stop offset=".996" stop-color="#34b171"></stop><stop offset="1" stop-color="#34b171"></stop></linearGradient><path fill="url(#c0yjGprCnv9Gl20e9Vf6Cb_118993_gr2)" d="M57,31c0,13.805-11.195,25-25,25S7,44.805,7,31S18.195,6,32,6S57,17.195,57,31z"></path><path fill="#fff" d="M42.695,21.733L27.5,36.946l-5.235-5.22c-0.977-0.974-2.558-0.973-3.533,0.003l0,0 c-0.977,0.977-0.976,2.562,0.002,3.538l7.002,6.985c0.977,0.975,2.559,0.973,3.534-0.003l16.962-16.982 c0.975-0.977,0.975-2.559-0.001-3.535l0,0C45.254,20.756,43.671,20.756,42.695,21.733z"></path>
+                            </svg>
+                        <p>پیام شما با موفقیت ثبت شد</p>
+                    </div>
+                   
+                </div>
+            </div>
+        </section>
+
+
+        <section class="section-space">
+            <div  class="container">
+                <div style="background-color: #d3ff9d8e;"  class="contact-info">
+                    <div class="contact-info-item">
+                        <img style="margin: 10px;" src="data:image/png;base64,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">
+                        <a href="tel://09120316231">09120316231</a>
+                        <a href="tel://22908316">22908316</a>
+                        
+                    </div>
+                    <div class="contact-info-item">
+                        <svg style="margin: 10px;" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50" viewBox="0 0 48 48">
+                            <path fill="#e0e0e0" d="M5.5,40.5h37c1.933,0,3.5-1.567,3.5-3.5V11.543c0-1.933-1.567-3.5-3.5-3.5h-37	c-1.933,0-3.5,1.567-3.5,3.5V37C2,38.933,3.567,40.5,5.5,40.5z"></path><path fill="#d9d9d9" d="M44.482,12.759L24,27.763L3.518,12.758c0,0-0.095-0.066-0.236-0.182L26,40.5h16.5 c1.933,0,3.5-1.567,3.5-3.5V11.441c0-0.102-0.021-0.197-0.03-0.296C45.816,12.262,44.482,12.759,44.482,12.759z"></path><path fill="#eee" d="M6.745,40.5H42.5c1.933,0,3.5-1.567,3.5-3.5V11.5L6.745,40.5z"></path><path fill="#e0e0e0" d="M25.745,40.5H42.5c1.933,0,3.5-1.567,3.5-3.5V11.5L18.771,31.616L25.745,40.5z"></path><path fill="#ca3737" d="M3.603,12.759c0,0-1.334-0.938-1.488-2.055c-0.008,0.099-0.03,0.195-0.03,0.296 L2,11.473v17.799V37c0,1.933,1.567,3.5,3.5,3.5H7V15.247L3.603,12.759z"></path><path fill="#ca3737" d="M45.97,11.145c-0.154,1.117-1.488,1.614-1.488,1.614L41,15.31V40.5h1.5 c1.933,0,3.5-1.567,3.5-3.5v-7.729v-17.83C46,11.34,45.979,11.244,45.97,11.145z"></path><path fill="#bcbcbc" d="M3.42,13.31l20.623,14.973L44.665,13.31c0,0,0.937-0.661,1.335-1.531v-0.228	c-0.012-1.996-1.569-3.51-3.5-3.5h-37c-1.933,0-3.5,1.567-3.5,3.5v0.009C2.323,12.536,3.42,13.31,3.42,13.31z"></path><g><path fill="#f5f5f5" d="M42.5,8H24H5.5C3.567,8,2,9.536,2,11.5c0,1.206,1.518,2.258,1.518,2.258L24,28.256 l20.482-14.497c0,0,1.518-1.053,1.518-2.258C46,9.536,44.433,8,42.5,8z"></path><path fill="#e84f4b" d="M43.246,8.082L24,21.5L4.754,8.082C3.18,8.419,2,9.797,2,11.5 c0,1.206,1.518,2.258,1.518,2.258L24,28.256l20.482-14.497c0,0,1.518-1.053,1.518-2.258C46,9.797,44.82,8.419,43.246,8.082z"></path></g>
+                        </svg>
+                        <a href="mailto://vestakhak@gmail.com">Vestakhak@gmail.com</a>
+                    </div>
+                    <div class="contact-info-item mb-0">
+                        <img style="margin: 10px;"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADGUlEQVR4nO2aS0hVURSG/8pepDWM7AFFBZk1CdTuXeucHko2qAbRpGkkiaLUJCcNgmjeoIggEGleNGkShRSRSJNUGkVBZVH0VkrF/tjn3m5iaXuf1z1CCxZcLpd//9866yz22ecC/6MQVKyloIWKHgoeUfCOggkqxql4S0U/Bd1UHGMO1chKUNBMxV0qJqmgZZrf3qagsbzGBX0Opv+eggepgrARKyi4Ftn4nyDdzKEqWfMeNlHwJHbzWsoh+tiYlPltFLxJ0DyLV2KYHrbEaz6HagpeJG5eS/mKPtbEY34HFgYjMD3zLOZD+qiIDqA4WwbzLOaZaObzWEfBN8cefkwPncxjK5uwLEjz2XwnGHAEGGUDVkep/kUH498paCUwf0a9I1hARRsVYw4QF8KZz6GKii/W5j3sdijMHmsIwSdzFd0BFIcdqnQihH67g/4hdwDBZeuen6Vt/tFOg5YAl8IA2O1zBB3O4r/XOGkJcN9dvLAFtgGoCQ3go9Zyjdfu4ubGtBH3URkaIBcMCqsh4S5uZrCNeIQdJOuw3BLgq7u44FlmWkjxNAxAr5W4h87Eb2LBnTDi5y3FB8xIDDlGhyyvwDl3gDz2W4qbbHPWF3Q46O9zB2jGYio+WC4wRsFeB/ONxdMKWuR71mCRM0CwkOKKQ5XM3qZ9tnYK2qZQeVvzNDuCUOaLlap3APiVg8HNaSaMj8pi1lJwyqHnOSXrQgMEEIp7IRaNJwW9kcwHAB4Olg0gjwORAQIIc/iUfvX7CMyLB0DhpQ7g2T8g2UEIbqQIcD1W81Me8EdSMD9KxfrYAQIIRVcKvX86EfMBgI+KhG/ofnOQlhhAACHYYH1a4Vb5EQo2J2p+CkRLAgDHUzFfglDcjBHgVmwz3xqgHiuDo/DolR82WqmaL0F42Ol4TDg9x+lBy2K+BFE46wxb/VZkIai4GgKgB1kJNmCp40uQfvpYgiwFFauoeG5h/mVsr4/iDnNGRMHHWcx/pmA7shzMY9cMk8lMnCbMhaCHo9P+ejBpvsNcCprXTQXzP8K8AEEWorj97kpykZ+xubp/rAMA/QAAAABJRU5ErkJggg==">
+                        <p>تهران خیابان شریعتی بعد از میرداماد کوچه شریفی پلاک 13 واحد 5</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Contact Area Wrapper ==-->
+
+        <div class="map-area">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d6475.227662393823!2d51.44516856550232!3d35.760295274897636!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDQ1JzM3LjEiTiA1McKwMjYnNDIuNiJF!5e0!3m2!1sfa!2sru!4v1706660126513!5m2!1sfa!2sru" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+    </main>
+
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+</div>
+
+
+{% endblock %}
+
+{% block inpage_js_link %}
+
+<script src="{% static 'img/modernizr-3.11.7.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.3.2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'js/range-slider.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}
+
+
+{% block inpage_js %}
+
+<script>
+    $(document).ready(function() {
+        $("#contact-form").submit(function(event) {
+            event.preventDefault();
+            $("#form_messages").css("display","flex")
+        });
+    });
+</script>
+
+{% endblock %}

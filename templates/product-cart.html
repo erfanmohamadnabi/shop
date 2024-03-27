@@ -1,0 +1,163 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>سبدخرید</title>{% endblock %}
+
+    <!-- CSS (Font, Vendor, Icon, Plugins & Style CSS files) -->
+
+    <!-- Font CSS -->
+    <!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+    <!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+    <!--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">-->
+
+    <!-- Vendor CSS (Bootstrap & Icon Font) -->
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+<link rel="stylesheet" href="{% static 'css/range-slider.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+
+    <main class="main-content">
+
+        <!--== Start Page Header Area Wrapper ==-->
+        <nav style="background-color: #d3ff9d8e;" aria-label="breadcrumb" class="breadcrumb-style1">
+            <div class="container">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">سبد خرید</li>
+                </ol>
+            </div>
+        </nav>
+        <!--== End Page Header Area Wrapper ==-->
+
+        {% if order_detail %}
+        <section class="section-space">
+            <div class="container">
+                <div class="shopping-cart-form table-responsive">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <table class="table text-center">
+                            <thead>
+                            <tr>
+                                <th class="product-remove">&nbsp;</th>
+                                <th class="product-thumbnail">&nbsp;</th>
+                                <th class="product-name">محصول</th>
+                                <th class="product-price">قیمت</th>
+                                <th class="product-quantity">تعداد</th>
+                                <th class="product-subtotal">جمع</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for x in order_detail %}
+                            <tr class="tbody-item">
+                                <td class="product-remove">
+                                    <a class="remove" href="delete_product_order_page/{{ x.id }}">×</a>
+                                </td>
+                                <td class="product-thumbnail">
+                                    <div class="thumb">
+                                        <a href="single-product.html">
+                                            <img src="{{ x.product.image.url }}" width="68" height="84" alt="Image-HasTech">
+                                        </a>
+                                    </div>
+                                </td>
+                                <td class="product-name">
+                                    <a class="title" href="single-product.html">{{ x.product.name }}</a>
+                                </td>
+                                <td class="product-price">
+                                    <span class="price">{{ x.product.price }} تومان</span>
+                                    <input type="text" value="{{ x.id }}" hidden name="xid">
+                                </td>
+                                <td class="product-quantity">
+                                    <div class="pro-qty">
+                                        <input type="text" class="quantity" name="count" title="Quantity" value="{{ x.count }}">
+                                    </div>
+                                </td>
+                                <td class="product-subtotal">
+                                    <span class="price">{{ x.get_sum }} تومان</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+
+
+                            <tr class="tbody-item-actions">
+                                <td colspan="6">
+                                    <button type="submit" class="btn-update-cart " >ویرایش سبد خرید</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="coupon-wrap">
+                            <h4 class="title">تخفیف</h4>
+                            <p class="desc">اگر کد تخفیف خود را دارید وارد کنید.</p>
+                            <input type="text" class="form-control" placeholder="کد تخفیف">
+                            <button type="button" class="btn-coupon">درخواست تخفیف</button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="cart-totals-wrap">
+                            <h2 class="title">مجموع سبد خرید</h2>
+                            <table>
+                                <tbody>
+                                <tr class="cart-subtotal">
+                                    <th>جمع کل</th>
+                                    <td>
+                                        <span class="amount">{{ order.total }} تومان</span>
+                                    </td>
+                                </tr>
+                               
+                               
+                                </tbody>
+                            </table>
+                            <div class="text-end">
+                                <a href="/final_payment" class="checkout-button">برای تسویه حساب اقدام کنید</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% else %}
+        <p style="text-align: center;margin-top: 150px;">سبد خرید شما خالی میباشد !!!</p>
+        {% endif %}
+
+    </main>
+
+
+
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+
+</div>
+
+{% endblock %}
+
+
+{% block inpage_js_link %}
+
+<script src="{% static 'img/modernizr-3.11.7.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.3.2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'js/range-slider.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}

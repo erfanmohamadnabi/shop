@@ -1,0 +1,260 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>ثبت نهایی سفارش</title>{% endblock %}
+
+    <!-- CSS (Font, Vendor, Icon, Plugins & Style CSS files) -->
+
+    <!-- Font CSS -->
+    <!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+    <!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+    <!--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">-->
+
+    <!-- Vendor CSS (Bootstrap & Icon Font) -->
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+<link rel="stylesheet" href="{% static 'css/range-slider.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+
+
+
+    <main class="main-content">
+
+        <!--== Start Page Header Area Wrapper ==-->
+        <nav style="background-color: #d3ff9d8e;" aria-label="breadcrumb" class="breadcrumb-style1">
+            <div class="container">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">پرداخت</li>
+                </ol>
+            </div>
+        </nav>
+        <!--== End Page Header Area Wrapper ==-->
+        {% if order_detail %}
+        <section class="shopping-checkout-wrap section-space">
+            <div class="container">
+                <div class="checkout-page-coupon-wrap">
+                    <!--== Start Checkout Coupon Accordion ==-->
+                    <div class="coupon-accordion" id="CouponAccordion">
+                        <div class="card">
+                            <h3>
+                                <i class="fa fa-info-circle"></i>
+                                تخفیف دارید؟
+                                <a href="#/" data-bs-toggle="collapse" data-bs-target="#couponaccordion">برای وارد کردن کد خود اینجا را کلیک کنید</a>
+                            </h3>
+                            <div id="couponaccordion" class="collapse" data-bs-parent="#CouponAccordion">
+                                <div class="card-body">
+                                    <div class="apply-coupon-wrap">
+                                        <p>اگر کد تخفیف دارید، لطفاً آن را در زیر اعمال کنید.</p>
+                                        <form action="#" method="post">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="Coupon code">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button" class="btn-coupon">درخواست کوپن</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--== End Checkout Coupon Accordion ==-->
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!--== Start Billing Accordion ==-->
+                        <div class="checkout-billing-details-wrap">
+                            <h2 class="title">جزئیات صورتحساب</h2>
+                            <div class="billing-form-wrap">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="f_name">نام کوچک <abbr class="required" title="required">*</abbr></label>
+                                                <input id="f_name" name="fname" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="l_name">نام خانوادگی <abbr class="required" title="required">*</abbr></label>
+                                                <input id="l_name" name="lname" type="text" class="form-control" required>
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="col-md-12 mb-4">
+                                            <div class="form-group">
+                                                <label for="country">کشور <abbr class="required" title="required">*</abbr></label>
+                                                <select id="country" class="form-control wide">
+                                                    <option>ایران</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="town">شهر / استان
+                                                    <abbr class="required" title="required">*</abbr></label>
+                                                <input id="town" name="city" required type="text" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="street-address">آدرس <abbr class="required" title="required">*</abbr></label>
+                                                <textarea required name="addres" id="order-notes" class="form-control" placeholder="ادرس دقیق خود را وارد کنید..."></textarea>
+                                            </div>
+                                            
+                                        </div>
+                                    
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="pz-code"> کد پستی <abbr class="required" title="required">*</abbr></label>
+                                                <input id="pz-code" name="post_code" required  type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="phone"> تلفن <abbr class="required" title="required">*</abbr></label>
+                                                <input id="phone" required name="phone" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                      
+                                       
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-0">
+                                                <label for="order-notes">سفارش یادداشت (اختیاری)</label>
+                                                <textarea id="order-notes" name="note" class="form-control" placeholder="نکاتی در مورد سفارش شما، به عنوان مثال یادداشت های ویژه برای تحویل"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        <!--== End Billing Accordion ==-->
+                    </div>
+                    <div class="col-lg-6">
+                        <!--== Start Order Details Accordion ==-->
+                        <div class="checkout-order-details-wrap">
+                            <div class="order-details-table-wrap table-responsive">
+                                <h2 class="title mb-25">سفارش شما</h2>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="product-name">محصول</th>
+                                        <th class="product-total">جمع</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table-body">
+                                    {% for x in order_detail %}
+                                    <tr class="cart-item">
+                                        <td class="product-name"> {{ x.product.name }} <span class="product-quantity">× {{ x.count }}</span></td>
+                                        <td class="product-total">{{ x.product.price }} تومان</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot class="table-foot">
+                                    <!-- <tr class="cart-subtotal">
+                                        <th>جمع فرعی
+                                        </th>
+                                        <td>20.00 تومان</td>
+                                    </tr> -->
+                                    <tr class="shipping">
+                                        <th> ارسال با پست</th>
+                                        <td>نرخ ثابت: 40000 تومان</td>
+                                    </tr>
+                                    <tr class="order-total">
+                                        <th>جمع </th>
+                                        <td>{{ order.total }} تومان</td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="shop-payment-method">
+                                    <div id="PaymentMethodAccordion">
+                                        <!--<div class="card">-->
+                                        <!--    <div class="card-header" id="check_payments">-->
+                                        <!--        <input type="radio" checked value="online" name="payment">-->
+                                        <!--        <label for="salam">پرداخت   مستقیم با درگاه پرداخت زیبال</label>-->
+                                        <!--    </div>-->
+                                        <!--    <div id="itemOne" class="collapse show" aria-labelledby="check_payments" data-bs-parent="#PaymentMethodAccordion">-->
+                                        <!--        <div class="card-body">-->
+                                        <!--            <p>پرداخت خود را مستقیماً به حساب بانکی ما انجام دهید کاملا ایمن با دیگاه پرداخت زیبال .</p>-->
+                                        <!--        </div>-->
+                                        <!--    </div>-->
+                                        <!--</div>-->
+                                      
+                                        <div class="card">
+                                            <div class="card-header" id="check_payments3">
+                                                <input type="radio" value="home" name="payment">
+                                                <label for="salam">پرداخت  نقدی درب منزل (برای ساکنین تهران و اطراف)</label>
+                                            </div>
+                                            <div id="itemThree" class="collapse" aria-labelledby="check_payments3" data-bs-parent="#PaymentMethodAccordion">
+                                                <div class="card-body">
+                                                    <p>پرداخت نقدی فقط برای ساکنان تهران و اطراف امکان دارد در غیر این صورت سفارش شما حذف خواهد شد .</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <button type="submit" style="display: flex;align-items: center;width: 200px;justify-content: center;height: 70px;background-color: transparent;border: 0;">
+                                        <a style="width: 100%;height: 100%;border-radius: 4px;"  class="btn-place-order">ثبت سفارش</a>
+                                    </button>
+                                </div>
+                                </form>
+
+                               {% if error %}
+                                <p style="margin: 30px;color: red;">{{ error }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!--== End Order Details Accordion ==-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% else %}
+        <p style="text-align: center;margin-top: 200px;">سبد خرید شما خالی میباشد !!!</p>
+        {% endif %}
+    </main>
+
+
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+</div>
+
+{% endblock %}
+
+
+
+
+{% block inpage_js_link %}
+
+<script src="{% static 'img/modernizr-3.11.7.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.3.2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'js/range-slider.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}
+

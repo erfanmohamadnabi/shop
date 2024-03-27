@@ -1,0 +1,905 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>وستا خاک</title>{% endblock %}
+
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+<link rel="stylesheet" href="{% static 'css/range-slider.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+
+
+    <main class="main-content">
+        <!--== Start Hero Area Wrapper ==-->
+        <section class="hero-two-slider-area position-relative">
+            <div class="swiper banner_container">
+                <div class="swiper-wrapper">
+
+
+                    <div class="swiper-slide hero-two-slide-item">
+
+                        <img src="{% static 'img/banner5.jpg' %}" alt="">
+                    </div>
+
+
+                    <div class="swiper-slide hero-two-slide-item">
+
+                        <img src="{% static 'img/banner4.jpg' %}" alt="">
+                    </div>
+
+
+                </div>
+                <!--== Add Pagination ==-->
+ 
+            </div>
+        </section>
+        <!--== End Hero Area Wrapper ==-->
+
+        <!--== Start Product Banner Area Wrapper ==-->
+        <section class="section-space">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-4">
+                        <!--== Start Product Category Item ==-->
+                        <a href="/Producst_List" class="product-banner-item">
+                            <img src="{% static 'img/banner12.jpg' %}" width="370" height="370" alt="Image-HasTech">
+                        </a>
+                        <!--== End Product Category Item ==-->
+                    </div>
+                    <div class="col-sm-6 col-lg-4 mt-sm-0 mt-6">
+                        <!--== Start Product Category Item ==-->
+                        <a href="/Producst_List" class="product-banner-item">
+                            <img src="{% static 'img/banner11.jpg' %}" width="370" height="370" alt="Image-HasTech">
+                        </a>
+                        <!--== End Product Category Item ==-->
+                    </div>
+                    <div class="col-sm-6 col-lg-4 mt-lg-0 mt-6">
+                        <!--== Start Product Category Item ==-->
+                        <a href="/Producst_List" class="product-banner-item">
+                            <img src="{% static 'img/banner10.jpg' %}" width="370" height="370" alt="Image-HasTech">
+                        </a>
+                        <!--== End Product Category Item ==-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Product Banner Area Wrapper ==-->
+
+        <!--== Start Product Area Wrapper ==-->
+        <section class="section-space pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title">
+                            <h2 class="title">فروش عمده</h2>
+                            <p class="m-0">انواع کوکوپیت ،کوکوچیپس و گروبگ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-n4 mb-sm-n10 g-3 g-sm-6">
+
+
+                    {% if page_obj %}
+                    {% for x in prpductso|slice:"6" %}
+                    {% if x.active == True %}
+                    <div class="col-6 col-lg-4 mb-4 mb-sm-8">
+                        <!--== Start Product Item ==-->
+                        <div class="product-item">
+                            <div class="product-thumb">
+                                <a class="d-block" href="{{ x.get_absolute_url }}">
+                                    <img src="{{ x.image.url }}" width="370" height="450" alt="Image-HasTech">
+                                </a>
+                                {% if x.id > last %}
+                                <span class="flag-new">جدید</span>
+                                {% endif %}
+                                <div class="product-action">
+
+                                    <form action="" name="myForm" class="fast_visited" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" value="{{ x.id }}" hidden name="fast_visit">
+                                        <button type="submit" class="product-action-btn action-btn-quick-view"
+                                            data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                            <i class="fa fa-expand"></i>
+                                        </button>
+                                    </form>
+
+                                    {% if request.user.is_authenticated %}
+                                    {% if x.buy == False %}
+                                    <form action="" class="order_form" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-cart"
+                                            data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                                        <span>به سبد خرید اضافه کنید</span>
+                                        </button>
+                                    </form>
+                                    {% else %}
+                                        <a href="tel:09120316231">
+                                            <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-cart"
+                                             data-bs-target="#action-CartAddModal">
+                                        <span> جهت خرید تماس بگیرید</span>
+                                        </button>
+                                        </a>
+                                    {% endif %}
+                                    {% else %}
+                                    <a href="/login">
+                                        <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                    <button type="submit" class="product-action-btn action-btn-cart"
+                                         data-bs-target="#action-CartAddModal">
+                                         <span>به سبد خرید اضافه کنید</span>
+                                    </button>
+                                    </a>
+                                    {% endif %}
+
+                                    <form action="" class="likeform" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" value="{{ x.id }}" name="like" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-wishlist"
+                                            data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                        <i class="fa fa-heart-o"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-rating">
+                                    <div class="rating">
+                                       
+                                        {% if x.ranking_AVG == 1 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 2 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 3 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 4 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 5 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% else %}
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% endif %}
+                                        
+                                    </div>
+                        
+                                   
+                                    
+                                    <div class="reviews">{{ x.cmcm }} دیدگاه</div>
+                               
+                                    
+
+                                </div>
+                                <h4 class="title"><a href="{{ x.get_absolute_url }}">{{ x.name }}</a></h4>
+                                <div class="prices">
+                                    {% if x.buy == False %}
+                                    <span class="price">{{ x.price }} تومان</span>
+                                    {% if x.price_percent %}
+                                    <span class="price-old">{{ x.price_percent }}</span>
+                                    {% endif %}
+                                    {% else %}
+                                    <span class="price">فروش عمده</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div  class="product-action-bottom">
+
+
+                                <form style="width: 48%;background-color: aqua;" action="" method="post" name="myForm" class="fast_visited">
+                                    {% csrf_token %}
+                                    <input type="text" value="{{ x.id }}" hidden name="fast_visit">
+                                    <button style="width: 100%;" type="submit" class="product-action-btn action-btn-quick-view"
+                                        data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                    <i class="fa fa-expand"></i>
+                                    </button>
+                                </form>
+
+
+
+
+
+                                <form style="display: flex;align-items: center;justify-content: center;background-color: #f7f7f7;width: 48%;" class="product-action-btn action-btn-wishlist likeform" method="post" action="">
+                                    {% csrf_token %}
+                                    <input type="text" value="{{ x.id }}" name="like" hidden>
+                                    <button style="border: none;" type="submit" class="product-action-btn action-btn-wishlist"
+                                        data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                    <i class="fa fa-heart-o"></i>
+                                    </button>
+                                </form>
+
+
+
+
+                            {% if request.user.is_authenticated %}
+                            {% if x.buy == False %}
+                            <form style="width: 100%;height: 100%;" class="order_form" action="" method="post">
+                                {% csrf_token %}
+                                <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                <button type="submit" class="product-action-btn action-btn-cart" data-bs-toggle="modal"
+                                        data-bs-target="#action-CartAddModal">
+                                    <span>به سبد خرید اضافه کنید</span>
+                                </button>
+                            </form>
+                            {% else %}
+                            <a style="width: 100%;" href="tel:09120316231">
+                                    {% csrf_token %}
+                                    <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                    <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal">
+                                            <span> جهت خرید تماس بگیرید</span>
+                                    </button>
+                            </a>
+                            {% endif %}
+                            {% else %}
+                            <a style="width: 100%;" href="/login">
+                                {% csrf_token %}
+                                <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal">
+                                    <span>به سبد خرید اضافه کنید</span>
+                                </button>
+                        </a>
+                            {% endif %}
+                            </div>
+                        </div>
+                        <!--== End prPduct Item ==-->
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    <p style="text-align: center;">محصولی یافت نشد !!!</p>
+                    {% endif %}
+       
+                </div>
+            </div>
+        </section>
+        <!--== End Product Area Wrapper ==-->
+
+        <!--== Start Product Banner Area Wrapper ==-->
+        <section class="section-space pt-0">
+            <div class="container">
+                <!--== Start Product Category Item ==-->
+                <a href="/Producst_List" class="product-banner-item">
+                    <img src="{% static 'img/banner7.jpg' %}" width="1170" height="240" alt="Image-HasTech">
+                </a>
+                <!--== End Product Category Item ==-->
+            </div>
+        </section>
+        <!--== End Product Banner Area Wrapper ==-->
+
+        <!--== Start Product Area Wrapper ==-->
+        <section class="section-space pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title">
+                            <h2 class="title">محصولات فروش برتر</h2>
+                            <p class="m-0">پرفروش  ترین محصولات وستا خاک</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-n4 mb-sm-n10 g-3 g-sm-6">
+
+
+                   
+                    {% if page_obj %}
+                    {% for x in products_buy|slice:"3" %}
+                    {% if x.active == True %}
+                    <div class="col-6 col-lg-4 mb-4 mb-sm-8">
+                        <!--== Start Product Item ==-->
+                        <div class="product-item">
+                            <div class="product-thumb">
+                                <a class="d-block" href="{{ x.get_absolute_url }}">
+                                    <img src="{{ x.image.url }}" width="370" height="450" alt="Image-HasTech">
+                                </a>
+                                {% if x.id > last %}
+                                <span class="flag-new">جدید</span>
+                                {% endif %}
+                                <div class="product-action">
+
+                                    <form action="" name="myForm" class="fast_visited" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" value="{{ x.id }}" hidden name="fast_visit">
+                                        <button type="submit" class="product-action-btn action-btn-quick-view"
+                                            data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                            <i class="fa fa-expand"></i>
+                                        </button>
+                                    </form>
+
+                                    {% if request.user.is_authenticated %}
+                                    {% if x.buy == False %}
+                                    <form action="" class="order_form" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-cart"
+                                            data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                                        <span>به سبد خرید اضافه کنید</span>
+                                        </button>
+                                    </form>
+                                    {% else %}
+                                        <a href="tel:09120316231">
+                                            <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-cart"
+                                             data-bs-target="#action-CartAddModal">
+                                        <span> جهت خرید تماس بگیرید</span>
+                                        </button>
+                                        </a>
+                                    {% endif %}
+                                    {% else %}
+                                    <a href="/login">
+                                        <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                    <button type="submit" class="product-action-btn action-btn-cart"
+                                         data-bs-target="#action-CartAddModal">
+                                         <span>به سبد خرید اضافه کنید</span>
+                                    </button>
+                                    </a>
+                                    {% endif %}
+
+                                    <form action="" class="likeform" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" value="{{ x.id }}" name="like" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-wishlist"
+                                            data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                        <i class="fa fa-heart-o"></i>
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-rating">
+                                    <div class="rating">
+                                       
+                                        {% if x.ranking_AVG == 1 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 2 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 3 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 4 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 5 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% else %}
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% endif %}
+                                        
+                                    </div>
+                        
+                                   
+                                    
+                                    <div class="reviews">{{ x.cmcm }} دیدگاه</div>
+                               
+                                    
+
+                                </div>
+                                <h4 class="title"><a href="{{ x.get_absolute_url }}">{{ x.name }}</a></h4>
+                                <div class="prices">
+                                    {% if x.buy == False %}
+                                    <span class="price">{{ x.price }} تومان</span>
+                                    {% if x.price_percent %}
+                                    <span class="price-old">{{ x.price_percent }}</span>
+                                    {% endif %}
+                                    {% else %}
+                                    <span class="price">فروش عمده</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div  class="product-action-bottom">
+
+
+                                <form style="width: 48%;background-color: aqua;" action="" method="post" name="myForm" class="fast_visited">
+                                    {% csrf_token %}
+                                    <input type="text" value="{{ x.id }}" hidden name="fast_visit">
+                                    <button style="width: 100%;" type="submit" class="product-action-btn action-btn-quick-view"
+                                        data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                    <i class="fa fa-expand"></i>
+                                    </button>
+                                </form>
+
+
+
+
+
+                                <form style="display: flex;align-items: center;justify-content: center;background-color: #f7f7f7;width: 48%;" class="product-action-btn action-btn-wishlist likeform" method="post" action="">
+                                    {% csrf_token %}
+                                    <input type="text" value="{{ x.id }}" name="like" hidden>
+                                    <button style="border: none;" type="submit" class="product-action-btn action-btn-wishlist"
+                                        data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                    <i class="fa fa-heart-o"></i>
+                                    </button>
+                                </form>
+
+
+
+
+                            {% if request.user.is_authenticated %}
+                            {% if x.buy == False %}
+                            <form style="width: 100%;height: 100%;" class="order_form" action="" method="post">
+                                {% csrf_token %}
+                                <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                <button type="submit" class="product-action-btn action-btn-cart" data-bs-toggle="modal"
+                                        data-bs-target="#action-CartAddModal">
+                                    <span>به سبد خرید اضافه کنید</span>
+                                </button>
+                            </form>
+                            {% else %}
+                            <a style="width: 100%;" href="tel:09120316231">
+                                    {% csrf_token %}
+                                    <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                    <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal">
+                                            <span> جهت خرید تماس بگیرید</span>
+                                    </button>
+                            </a>
+                            {% endif %}
+                            {% else %}
+                            <a style="width: 100%;" href="/login">
+                                {% csrf_token %}
+                                <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal">
+                                    <span>به سبد خرید اضافه کنید</span>
+                                </button>
+                        </a>
+                            {% endif %}
+                            </div>
+                        </div>
+                        <!--== End prPduct Item ==-->
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    <p style="text-align: center;">محصولی یافت نشد !!!</p>
+                    {% endif %}
+            </div>
+        </section>
+        <!--== End Product Area Wrapper ==-->
+
+        <!--== Start Brand Logo Area Wrapper ==-->
+        <div class="section-space pt-0">
+           <div class="container">
+                <div class="swiper brand-logo-slider-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide brand-logo-item">
+                            <!--== Start Brand Logo Item ==-->
+                            <img src="{% static 'img/coco1.jpg' %}" width="155" height="110" alt="Image-HasTech">
+                            <!--== End Brand Logo Item ==-->
+                        </div>
+                        <div class="swiper-slide brand-logo-item">
+                            <!--== Start Brand Logo Item ==-->
+                            <img src="{% static 'img/coco2.jpg' %}" width="175" height="110" alt="Image-HasTech">
+                            <!--== End Brand Logo Item ==-->
+                        </div>
+                        <div class="swiper-slide brand-logo-item">
+                            <!--== Start Brand Logo Item ==-->
+                            <img src="{% static 'img/coco3.jpg' %}" width="147" height="110" alt="Image-HasTech">
+                            <!--== End Brand Logo Item ==-->
+                        </div>
+                        <div class="swiper-slide brand-logo-item">
+                            <!--== Start Brand Logo Item ==-->
+                            <img src="{% static 'img/coco4.jpg' %}" width="156" height="110" alt="Image-HasTech">
+                            <!--== End Brand Logo Item ==-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--== End Brand Logo Area Wrapper ==-->
+
+        <!--== Start Blog Area Wrapper ==-->
+        <section class="section-space pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title text-center">
+                            <h2 class="title">پست های وبلاگ</h2>
+                            <p>جدیدترین مقالات درباره بستر های کشت , کود و موارد استفاده از آن ها</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-n9">
+                    {% for y in info|slice:"3" %}
+                    <div class="col-sm-6 col-lg-4 mb-8">
+                        <!--== Start Blog Item ==-->
+                        <div class="post-item">
+                            <a href="{{ y.get_absolute_url }}" class="thumb">
+                                
+                                <img style="height: 300px;" src="{{ y.image.url }}" width="370" height="320" alt="Image-HasTech">
+                                
+                            </a>
+                            <div class="content">
+                                {% if y.category %}
+                                <a class="post-category" href="{{ y.category.get_absolute_url }}">{{ y.category }}</a>
+                                {% endif %}
+                                <h4 class="title"><a href="{{ y.get_absolute_url }}">{{ y.title }}</a></h4>
+                                <ul class="meta">
+                                    <li class="author-info"><span>توسط:</span> <a >{{ y.writer }}</a></li>
+                                    <li class="post-date">{{ y.date }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--== End Blog Item ==-->
+                    </div>
+                    {% endfor %}
+                   
+            </div>
+        </section>
+        <!--== End Blog Area Wrapper ==-->
+
+        <!--== Start News Letter Area Wrapper ==-->
+        <section class="section-space pt-0">
+            <div class="container">
+                <div class="newsletter-content-wrap" data-bg-img="{% static 'img/back.webp' %}">
+                    <div class="newsletter-content">
+                        <div class="section-title mb-0">
+                            <h2 class="title">به ما بپیوند</h2>
+                            <p>برای اطلاع از تخفیف ها و جشنواره های وستا خاک عضو باشگاه مشتریان ما شوید </p>
+                        </div>
+                    </div>
+                    <div class="newsletter-form">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="text" name="email_user" class="form-control" placeholder="شماره تلفن خود را وارد کنید...">
+                            <button class="btn-submit" type="submit"><i class="fa fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End News Letter Area Wrapper ==-->
+
+    </main>
+
+
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+
+    <aside class="product-cart-view-modal modal fade" id="action-QuickViewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="product-quick-view-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                            <span class="fa fa-close"></span>
+                        </button>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!--== Start Product Thumbnail Area ==-->
+                                    <div class="product-single-thumb">
+                                        <img src="" width="544" height="560" id="image_product" alt="Image-HasTech">
+                                    </div>
+                                    <!--== End Product Thumbnail Area ==-->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!--== Start Product Info Area ==-->
+                                    <div class="product-details-content">
+                                        <h5 class="product-details-collection" id="name_pro"></h5>
+                                        <h3 class="product-details-title" id="name_product"></h3>
+                                        <div class="product-details-review mb-5">
+                                            <div class="product-review-icon" id="stars">
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-half-o"></i>
+                                            </div>
+                                            <button type="button" class="product-review-show" id="comment_count"></button>
+                                        </div>
+                                        <p class="mb-6" id="text_product"></p>
+
+
+                                    <form action="" method="post" class="order_form">
+                                        {% csrf_token %}
+                                        <input type="text" name="order_add" value="" id="visit_input" hidden>
+                                        <div class="product-details-pro-qty">
+                                            <div class="pro-qty">
+                                                <input type="text" title="Quantity" name="count" value="01">
+                                            </div>
+                                        </div>
+                                        <div class="product-details-action">
+                                            <h4 class="price" id="price_product"> </h4>
+
+                                            <div class="product-details-cart-wishlist" style="display: none;" id="orderbotton1">
+                                               <a href="tel:09120316231">
+                                                <button type="button"  class="btn" 
+                                                data-bs-target="#action-CartAddModal">جهت خرید تماس بگیرید
+                                                </button>
+                                               </a>
+                                            </div>
+
+                                            <div class="product-details-cart-wishlist" style="display: none;" id="orderbotton3">
+                                               <a href="/login">
+                                                <button type="button"  class="btn" 
+                                                data-bs-target="#action-CartAddModal">به سبد خرید اضافه کنید 
+                                                </button>
+                                               </a>
+                                            </div>
+
+                                            <div class="product-details-cart-wishlist" id="orderbotton2">
+                                                <button type="submit"  class="btn" data-bs-toggle="modal"
+                                                        data-bs-target="#action-CartAddModal">به سبد خرید اضافه کنید
+                                                </button>
+                                            </div>
+                                    </form>
+
+
+                                        </div>
+                                    </div>
+                                    <!--== End Product Info Area ==-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+</div>
+
+{% endblock %}
+
+
+{% block inpage_js_link %}
+
+<script src="{% static 'img/modernizr-3.11.7.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.3.2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'js/range-slider.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}
+
+{% block inpage_js %}
+
+<script>
+    // با استفاده از جی کوئری، در هنگام ارسال فرم
+$('.likeform').submit(function(event) {
+    event.preventDefault(); // جلوگیری از رفتن به لینک
+    
+    var form = $(this);
+    var url = form.attr('action'); // گرفتن آدرس عملیات
+    var method = form.attr('method'); // گرفتن روش عملیات (POST)
+    var formData = form.serialize(); // تبدیل داده‌های فرم به داده‌های ارسالی
+
+    $.ajax({
+        url: url, // آدرس عملیات
+        method: method, // روش عملیات
+        data: formData, // داده‌های ارسالی
+        success: function(response) {
+            // عملیات مورد نظر با موفقیت انجام شد
+            console.log(response);
+        },
+        error: function(error) {
+            // خطا در انجام عملیات
+            console.log(error);
+        }
+    });
+});
+
+
+</script>
+
+<script>
+    // با استفاده از جی کوئری، در هنگام ارسال فرم
+$('.order_form').submit(function(event) {
+    event.preventDefault(); // جلوگیری از رفتن به لینک
+    
+    var form = $(this);
+    var url = form.attr('action'); // گرفتن آدرس عملیات
+    var method = form.attr('method'); // گرفتن روش عملیات (POST)
+    var formData = form.serialize(); // تبدیل داده‌های فرم به داده‌های ارسالی
+
+    $.ajax({
+        url: url, // آدرس عملیات
+        method: method, // روش عملیات
+        data: formData, // داده‌های ارسالی
+        success: function(response) {
+            // عملیات مورد نظر با موفقیت انجام شد
+            console.log(response);
+        },
+        error: function(error) {
+            // خطا در انجام عملیات
+            console.log(error);
+        }
+    });
+});
+
+
+</script>
+
+<!-- <script>
+
+$('.fast_visited').submit(function(event) {
+    event.preventDefault(); // جلوگیری از رفتن به لینک
+    
+    var form = $(this);
+    var url = form.attr('action'); // گرفتن آدرس عملیات
+    var method = form.attr('method'); // گرفتن روش عملیات (POST)
+    var formData = form.serialize(); // تبدیل داده‌های فرم به داده‌های ارسالی
+
+    $.ajax({
+        url: url, // آدرس عملیات
+        method: method, // روش عملیات
+        data: formData, // داده‌های ارسالی
+        success: function(response) {
+            // عملیات مورد نظر با موفقیت انجام شد
+            console.log(response);
+        },
+        error: function(error) {
+            // خطا در انجام عملیات
+            console.log(error);
+        }
+    });
+});
+
+</script> -->
+
+<script>
+var forms = document.getElementsByClassName('fast_visited');
+for (var i = 0; i < forms.length; i++) {
+  forms[i].addEventListener('submit', function(event) {
+    event.preventDefault();
+  
+    var form = event.target;
+    var url = form.getAttribute('action');
+    var method = form.getAttribute('method');
+    var formData = new FormData(form);
+
+    fetch(url, {
+      method: method,
+      body: formData
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      var messageElement = document.getElementById('name_pro');
+      messageElement.textContent = data.message;
+
+
+      var productElement = document.getElementById('name_product');
+      productElement.textContent = data.product_name;
+
+
+      
+      var priceElement = document.getElementById('price_product');
+      priceElement.textContent = data.price_product;
+      var user = data.user_ahetnticate;
+
+
+
+      var orderButtonElement = document.getElementById('orderbotton1');
+      var orderButton2Element = document.getElementById('orderbotton2');
+      var orderButton3Element = document.getElementById('orderbotton3');
+      if (user === null){
+        orderButtonElement.style.display = "none";
+        orderButton2Element.style.display = "none";
+        orderButton3Element.style.display = "flex";
+      }
+      else if (data.price_product === 'فروش عمده') {
+        orderButtonElement.style.display = "flex";
+        orderButton2Element.style.display = "none";
+    } else {
+        orderButtonElement.style.display = "none";
+        orderButton2Element.style.display = "flex";
+    }
+
+      var textElement = document.getElementById('text_product');
+      textElement.innerHTML = data.text_product;
+
+      var commentElement = document.getElementById('comment_count');
+      commentElement.innerHTML = data.comment_count;
+
+
+      
+      var starElement = document.getElementById('stars');
+      var divElement = document.createElement('div');
+      divElement.className = 'product-review-icon';
+      var starsCount = parseInt(data.stars); 
+      for (var i = 1; i <= 5; i++) {
+      var iconElement = document.createElement('i');
+      if (i <= starsCount) {
+          iconElement.className = 'fa fa-star';
+      } else if (i === starsCount + 1) {
+          iconElement.className = 'fa fa-star-o';
+      } else {
+           iconElement.className = 'fa fa-star-o';
+      }
+        divElement.appendChild(iconElement);
+      }
+      starElement.innerHTML = ''; 
+      starElement.appendChild(divElement);
+
+
+
+      var imageElement = document.getElementById('image_product');
+      imageElement.setAttribute('src', data.img_link);
+
+      var imageElement = document.getElementById('visit_input');
+      imageElement.setAttribute('value', data.id_pruduct);
+
+      console.log(data);
+    })
+    .catch(function(error) {
+      console.error('خطا:', error);
+    });
+  });
+}
+</script>
+
+
+<script>
+var swiper = new Swiper('.banner_container', {
+  // ادامه تنظیمات موجود
+  autoplay: {
+    delay: 4000, // زمان تاخیر بین اسلایدها به میلی‌ثانیه (مثال: 5000 معادل 5 ثانیه)
+  },
+  loop: true, // اسلایدر به صورت لوپ حرکت خواهد کرد
+});
+</script>
+
+{% endblock %}

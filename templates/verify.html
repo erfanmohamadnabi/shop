@@ -1,0 +1,195 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+
+    <!-- CSS (Font, Vendor, Icon, Plugins & Style CSS files) -->
+
+    <!-- Font CSS -->
+    <!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+    <!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+    <!--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">-->
+
+    <!-- Vendor CSS (Bootstrap & Icon Font) -->
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+<link rel="stylesheet" href="{% static 'css/range-slider.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="wrapper">
+
+
+
+
+
+    <main class="main-content">
+
+        <!--== Start Page Header Area Wrapper ==-->
+        <section class="page-header-area pt-10 pb-9" data-bg-color="#defabe" style="background-color: #d3ff9d8e;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="page-header-st3-content text-center text-md-start">
+                            <ol class="breadcrumb justify-content-center justify-content-md-start">
+                                <li class="breadcrumb-item"><a class="text-dark" href="/">صفحه اصلی</a></li>
+                                <li class="breadcrumb-item active text-dark" aria-current="page">حساب کاربری</li>
+                            </ol>
+                            <h2 style="font-weight: 500;" class="page-header-title">حساب کاربری</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Page Header Area Wrapper ==-->
+
+        <!--== Start Account Area Wrapper ==-->
+        <section class="section-space">
+            <div class="container">
+                <div class="row mb-n8">
+                    <div class="col-lg-6 mb-8">
+                        <!--== Start Login Area Wrapper ==-->
+                        <div class="my-account-item-wrap">
+                            <h3 class="title">فراموشی رمز عبور</h3>
+                            <div class="my-account-form">
+                                <form id="send_form" class="send_form" action="" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group mb-6">
+                                        <label for="login_username">آدرس ایمیل<sup>*</sup></label>
+                                        <input type="email" name="email" id="register_username">
+                                    </div>
+                                    <input type="text" hidden value="login" name="code_request">
+                                  
+
+                                    <div class="form-group d-flex align-items-center mb-14">
+                                        <input type="submit" class="btn"  value="ارسال  کد تایید" style="width: 130px;">
+                                        
+                                        
+                                    </div>
+                                    <p style="margin: 20px;" id="message"></p>
+                                </form>
+
+                                <form style="margin: 15px;"  action="" method="post">
+                                    {% csrf_token %}
+                                    <label for="login_username">کد تایید<sup>*</sup></label>
+                                    <input style="margin: 10px;" type="text" name="verify_code" id="register_username">
+                                    <input  type="submit"  class="btn" value="ورود" style="width: 130px;margin-top: 10px;">
+                                </form>
+                                <br>
+                                <p>{{ login_error }}</p>
+                            </div>
+                        </div>
+                        <!--== End Login Area Wrapper ==-->
+                    </div>
+                    <div class="col-lg-6 mb-8">
+                        <!--== Start Register Area Wrapper ==-->
+                        
+                        {% if succes_sign %}
+                        <p style="background-color: rgb(125, 245, 44);padding: 20px;border-radius: 30px;color: white;">  {{ succes_sign }}  <p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Account Area Wrapper ==-->
+
+    </main>
+
+
+
+
+
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+</div>
+
+{% endblock %}
+
+
+{% block inpage_js_link %}
+
+<script src="{% static 'img/modernizr-3.11.7.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.3.2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'js/range-slider.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}
+<!-- Vendors JS -->
+{% block inpage_js %}
+
+<!-- <script>
+    // با استفاده از جی کوئری، در هنگام ارسال فرم
+$('#send_form').submit(function(event) {
+    event.preventDefault(); // جلوگیری از رفتن به لینک
+    
+    var form = $(this);
+    var url = form.attr('action'); // گرفتن آدرس عملیات
+    var method = form.attr('method'); // گرفتن روش عملیات (POST)
+    var formData = form.serialize(); // تبدیل داده‌های فرم به داده‌های ارسالی
+
+    $.ajax({
+        url: url, // آدرس عملیات
+        method: method, // روش عملیات
+        data: formData, // داده‌های ارسالی
+        success: function(response) {
+            // عملیات مورد نظر با موفقیت انجام شد
+            console.log(response);
+        },
+        error: function(error) {
+            // خطا در انجام عملیات
+            console.log(error);
+        }
+    });
+}); -->
+
+
+</script>
+
+<script>
+    var forms = document.getElementsByClassName('send_form');
+    for (var i = 0; i < forms.length; i++) {
+      forms[i].addEventListener('submit', function(event) {
+        event.preventDefault();
+      
+        var form = event.target;
+        var url = form.getAttribute('action');
+        var method = form.getAttribute('method');
+        var formData = new FormData(form);
+    
+        fetch(url, {
+          method: method,
+          body: formData
+        })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          var messageElement = document.getElementById('message');
+          messageElement.textContent = data.message;
+    
+    
+          console.log(data);
+        })
+        .catch(function(error) {
+          console.error('خطا:', error);
+        });
+      });
+    }
+    </script>
+
+{% endblock %}

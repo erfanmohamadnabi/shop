@@ -1,0 +1,798 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>{{ info.name }}</title>{% endblock %}
+
+    <!-- CSS (Font, Vendor, Icon, Plugins & Style CSS files) -->
+
+    <!-- Font CSS -->
+    <!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+    <!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+    <!--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">-->
+
+    <!-- Vendor CSS (Bootstrap & Icon Font) -->
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+<link rel="stylesheet" href="{% static 'css/range-slider.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
+<style>
+        .productsswiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .productsswiper .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .productsswiper .swiper-pagination-bullet {
+    background-color:#252525;
+  }
+
+</style>
+    
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="wrapper">
+
+
+
+    <main class="main-content">
+
+        <!--== Start Page Header Area Wrapper ==-->
+        <section class="page-header-area pt-10 pb-9" data-bg-color="#d3ff9d8e">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="page-header-st3-content text-center text-md-start">
+                            <ol class="breadcrumb justify-content-center justify-content-md-start">
+                                <li class="breadcrumb-item"><a class="text-dark" href="index-one.html">صفحه اصلی</a></li>
+                                <li class="breadcrumb-item active text-dark" aria-current="page">جزئیات محصول</li>
+                            </ol>
+                            <h2 class="page-header-title">جزئیات محصول</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <h5 class="showing-pagination-results mt-5 mt-md-9 text-center text-md-end">نمایش محصول واحد</h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Page Header Area Wrapper ==-->
+
+        <!--== Start Product Details Area Wrapper ==-->
+        <section class="section-space">
+            <div class="container">
+                <div class="row product-details">
+                    <div class="col-lg-6">
+
+
+
+                        
+                        
+
+                        <div class="swiper mySwiper productsswiper">
+                            <div class="swiper-wrapper">
+
+
+                                <div class="product-details-thumb swiper-slide">
+                                    <img src="{{ info.image.url }}" width="570" height="693" alt="Image">
+                                </div>
+                                {% for i in info.images.all %}
+                                <div class="product-details-thumb swiper-slide">
+                                    <img src="{{ i.image_id.url }}" width="570" height="693" alt="Image">
+                                </div>
+                                {% endfor %}
+                                
+                            </div>
+                            <div style="transform: translateY(15px);" class="swiper-pagination"></div>
+
+                          </div>
+
+
+
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="product-details-content">
+                            {% if info.category %}
+                            <h5 style="margin-top: 20px;" class="product-details-collection">{{ info.category }}</h5>
+                            {% endif %}
+                            <h3 class="product-details-title">{{ info.name }}</h3>
+                            <div class="product-details-review mb-7">
+                                <div class="product-review-icon">
+                                    {% if info.ranking_AVG == 0 %}
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    {% elif info.ranking_AVG == 1 %}
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    {% elif info.ranking_AVG == 2 %}
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    {% elif info.ranking_AVG == 3 %}
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    {% elif info.ranking_AVG == 4 %}
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    {% elif info.ranking_AVG == 5 %}
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    {% endif %}
+
+
+                                </div>
+                                <button type="button" class="product-review-show">{{ comments.count }} دیدگاه</button>
+                            </div>
+                            <p class="mb-7">{{ info.text|safe }}</p>
+                            <form action="" class="order_form" method="post">
+                                {% csrf_token %}
+                            <div class="product-details-pro-qty">
+                                <div class="pro-qty">
+                                    <input type="text" title="Quantity" name="count_product" value="01">
+                                </div>
+                            </div>
+                            <div class="product-details-shipping-cost">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="33" height="33" viewBox="0 0 32 32">
+                                    <path d="M 16 3 C 8.800781 3 3 8.800781 3 16 C 3 23.199219 8.800781 29 16 29 C 23.199219 29 29 23.199219 29 16 C 29 14.601563 28.8125 13.207031 28.3125 11.90625 L 26.6875 13.5 C 26.886719 14.300781 27 15.101563 27 16 C 27 22.101563 22.101563 27 16 27 C 9.898438 27 5 22.101563 5 16 C 5 9.898438 9.898438 5 16 5 C 19 5 21.695313 6.195313 23.59375 8.09375 L 25 6.6875 C 22.699219 4.386719 19.5 3 16 3 Z M 27.28125 7.28125 L 16 18.5625 L 11.71875 14.28125 L 10.28125 15.71875 L 15.28125 20.71875 L 16 21.40625 L 16.71875 20.71875 L 28.71875 8.71875 Z"></path>
+                                    </svg>
+                                <label class="form-check-label" for="ShippingCost">ارسال  با پست به سراسر کشور</label>
+                            </div>
+                            <div class="product-details-action">
+                                {% if info.buy == False %}
+                                <h4 class="price">{{ info.price }} تومان</h4>
+                                {% else %}
+                                <h4 class="price"><a href="tel:09120316231">تماس بگیرید</a></h4>
+                                {% endif %}
+                                <div class="product-details-cart-wishlist">
+
+
+                                    <form action="" class="likeform" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn-wishlist" data-bs-toggle="modal" data-bs-target="#action-WishlistModal"><i class="fa fa-heart-o"></i></button>
+                                        <input name="like" type="text" value="{{ info.id }}" hidden>
+                                    </form>
+
+                               
+                                    {% if info.buy == False %}
+                                    
+                                
+                                        
+                                        <input type="text" name="order_add" value="{{ info.id }}" hidden>
+                                        <button type="submit" class="btn" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">به سبد خرید اضافه کنید</button>
+                                    
+                                    {% else %}
+                                    <button type="button" class="btn" data-bs-toggle="" data-bs-target="#action-CartAddModal"><a href="tel:09120316231">برای خرید عمده تماس بگیرید</a></button>
+                                    {% endif %}
+                                 
+
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="nav product-details-nav" id="product-details-nav-tab" role="tablist">
+                            <button class="nav-link" id="specification-tab" data-bs-toggle="tab" data-bs-target="#specification" type="button" role="tab" aria-controls="specification" aria-selected="false">مشخصات</button>
+                            <button class="nav-link active" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="true">نظرات</button>
+                        </div>
+                        <div class="tab-content" id="product-details-nav-tabContent">
+                            <div class="tab-pane" id="specification" role="tabpanel" aria-labelledby="specification-tab">
+                                <ul class="product-details-info-wrap">
+                                    <li><span>وزن</span>
+                                        {% if info.Weight %}
+                                        <p>{{ info.Weight }}</p>
+                                        {% else %}
+                                        <p>وارد نشده</p>
+                                        {% endif %}
+                                    </li>
+                                    <li><span>دسته بندی</span>
+                                        {% if info.category %}
+                                        <p>{{ info.category }}</p>
+                                        {% else %}
+                                        <p>فاقد دسته بندی</p>
+                                        {% endif %}
+                                    </li>
+                                    <li><span>مواد</span>
+                                        {% if info.Materials %}
+                                        <p>{{ info.Materials }}</p>
+                                        {% else %}
+                                        <p>وارد نشده</p>
+                                        {% endif %}
+                                    </li>
+                                    <li><span>سایر اطلاعات</span>
+                                        <p>{{ info.title }}</p>
+                                    </li>
+                                </ul>
+
+                                <p>{{ info.text|safe }}</p></p>
+                            </div>
+
+                            <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+                                <!--== Start Reviews Content Item ==-->
+                                {% if comments %}
+                                {% for x in comments %}
+                                <div class="product-review-item">
+                                    <div class="product-review-top">
+                                        <div class="product-review-thumb">
+                                            <img width="70px" src="{% static 'img/profile2.png' %}" alt="Images">
+                                        </div>
+                                        <div class="product-review-content">
+                                            <span class="product-review-name">{{ x.name }}</span>
+                                            <span class="product-review-designation">کاربر سایت</span>
+                                            <div class="product-review-icon">
+
+                                                {% if x.rank == 1 %}
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                {% elif x.rank == 2 %}
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                {% elif x.rank == 3 %}
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                {% elif x.rank == 4 %}
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                {% elif x.rank == 5 %}
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                <i class="fa fa-star"></i>
+                                                {% endif %}
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="desc">{{ x.comment }}</p>
+                                  
+                                </div>
+                                {% endfor %}
+                                {% else %}
+                                <p>هیچ نظری برای این محصول ثبت نشده است</p>
+                                {% endif %}
+                              
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-5">
+                        <div class="product-reviews-form-wrap">
+                            <h4 class="product-form-title">نظر خود را بگذارید</h4>
+                            <div class="product-reviews-form">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-input-item">
+                                        <textarea required class="form-control" name="comment" placeholder="بازخورد خود را وارد کنید"></textarea>
+                                    </div>
+                                    <div class="form-input-item">
+                                        <input required class="form-control" name="name" type="text" placeholder="نام و نام خانوادگی">
+                                    </div>
+                                   
+                                    <div class="form-input-item">
+                                        <div class="form-ratings-item">
+                                            <select  id="product-review-form-rating-select" name="ranking" class="select-ratings">
+                                                <option value="1">01</option>
+                                                <option value="2">02</option>
+                                                <option value="3">03</option>
+                                                <option value="4">04</option>
+                                                <option value="5">05</option>
+                                            </select>
+                                            <span class="title">رتبه بندی خود را ارائه دهید</span>
+                                            <div class="product-ratingsform-form-wrap">
+                                                <div class="product-ratingsform-form-icon">
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </div>
+                                                <div id="product-review-form-rating" class="product-ratingsform-form-icon-fill">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="reviews-form-checkbox">
+                                            <input name="chek" class="form-check-input" type="checkbox" value="true" id="ReviewsFormCheckbox"  >
+                                            <label class="form-check-label" for="ReviewsFormCheckbox">رتبه بندی را به صورت ناشناس ارائه دهید.
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-input-item mb-0">
+                                        <button type="submit" class="btn">ارسال</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Product Details Area Wrapper ==-->
+
+        <!--== Start Product Banner Area Wrapper ==-->
+        <div class="container">
+            <!--== Start Product Category Item ==-->
+            <a href="/Producst_List" class="product-banner-item">
+                <img src="{% static 'img/banner7.jpg' %}" width="1170" height="240" alt="Image-HasTech">
+            </a>
+            <!--== End Product Category Item ==-->
+        </div>
+        <!--== End Product Banner Area Wrapper ==-->
+
+        <!--== Start Product Area Wrapper ==-->
+        <section class="section-space">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title">
+                            <h2 class="title">محصولات مرتبط</h2>
+                            <p class="m-0">  برای خانم‌ها و آقایانی که قصد خرید محصولاتی عالی و اصلی را دارند </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-n10">
+                    <div class="col-12">
+                        <div class="swiper related-product-slide-container">
+                            <div class="swiper-wrapper">
+
+                                {% for y in products|slice:"3" %}
+                                <div class="swiper-slide mb-10">
+                                    <!--== Start Product Item ==-->
+                                    <div class="product-item product-st2-item">
+                                        <div class="product-thumb">
+                                            <a class="d-block" href="{{ y.get_absolute_url }}">
+                                                <img src="{{ y.image.url }}" style="width: 100%;height: 450px;"
+                                                     alt="Image-HasTech">
+                                            </a>
+                                            <span class="flag-new">جدید</span>
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="product-rating">
+                                                <div class="rating">
+                                                    {% if y.ranking_AVG == 0 %}
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    {% elif y.ranking_AVG == 1 %}
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    {% elif y.ranking_AVG == 2 %}
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    {% elif y.ranking_AVG == 3 %}
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    {% elif y.ranking_AVG == 4 %}
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    {% elif y.ranking_AVG == 5 %}
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="reviews">{{ y.cmcm }} دیدگاه</div>
+                                            </div>
+                                            <h4 class="title"><a href="{{ y.get_absolute_url }}">{{ y.name }}</a>
+                                                <div class="prices">
+                                                    {% if y.buy == False %}
+                                                    <span class="price">{{ y.price }} تومان</span>
+                                                    {% if y.price_percent %}
+                                                    <span class="price-old">{{ y.price_percent }}</span>
+                                                    {% endif %}
+                                                    {% else %}
+                                                    <span class="price">فروش عمده</span>
+                                                    {% endif %}
+                                                </div>
+                                            <div class="product-action">
+                                            
+
+                                            {% if request.user.is_authenticated %}
+                                            {% if y.buy == False %}
+                                            <form action="" method="post" class="order_form">
+                                                {% csrf_token %}
+                                                <input name="order_add" type="text" value="{{ info.id }}" hidden>
+                                                <input type="text"  name="count_product" value="1" hidden>
+                                                <button type="submit" class="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                                                    <span>به سبد خرید اضافه کنید</span>
+                                                </button>
+                                            </form>
+                                            {% else %}
+                                            <a href="tel:09120316231">
+                                                <button type="submit" class="product-action-btn action-btn-cart"  data-bs-target="#action-CartAddModal">
+                                                    <span>جهت خرید تماس بگیرید</span>
+                                                </button>
+                                            </a>
+                                            {% endif %}
+                                            {% else %}
+                                            <a href="/login">
+                                                <button type="submit" class="product-action-btn action-btn-cart" data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                                                    <span>به سبد خرید اضافه کنید</span>
+                                                </button>
+                                            </a>
+                                            {% endif %}
+
+
+
+                                        <form action="" class="fast_visited" method="post">
+                                            {% csrf_token %}
+                                            <input type="text" value="{{ y.id }}" hidden name="fast_visit">
+                                            <button type="submit" class="product-action-btn action-btn-quick-view" data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                                <i class="fa fa-expand"></i>
+                                            </button>
+                                        </form>
+
+
+
+                                                <form action="" class="likeform" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="text" value="{{ y.id }}" name="like" hidden>
+                                                    <button type="submit" class="product-action-btn action-btn-wishlist"
+                                                    data-bs-toggle="modal" data-bs-target="#action-WishlistModal" >
+                                                        <i class="fa fa-heart-o"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--== End prPduct Item ==-->
+                                </div>
+                                {% endfor %}
+
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Product Area Wrapper ==-->
+
+    </main>
+
+
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+
+
+    <aside class="product-cart-view-modal modal fade" id="action-QuickViewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="product-quick-view-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                            <span class="fa fa-close"></span>
+                        </button>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!--== Start Product Thumbnail Area ==-->
+                                    <div class="product-single-thumb">
+                                        <img src="" width="544" height="560" id="image_product" alt="Image-HasTech">
+                                    </div>
+                                    <!--== End Product Thumbnail Area ==-->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!--== Start Product Info Area ==-->
+                                    <div class="product-details-content">
+                                        <h5 class="product-details-collection" id="name_pro"></h5>
+                                        <h3 class="product-details-title" id="name_product"></h3>
+                                        <div class="product-details-review mb-5">
+                                            <div class="product-review-icon" id="stars">
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-half-o"></i>
+                                            </div>
+                                            <button type="button" class="product-review-show" id="comment_count"></button>
+                                        </div>
+                                        <p class="mb-6" id="text_product"></p>
+
+
+                                    <form action="" method="post" class="order_form">
+                                        {% csrf_token %}
+                                        <input type="text" name="order_add" value="" id="visit_input" hidden>
+                                        <div class="product-details-pro-qty">
+                                            <div class="pro-qty">
+                                                <input type="text" title="Quantity" name="count" value="01">
+                                            </div>
+                                        </div>
+                                        <div class="product-details-action">
+                                            <h4 class="price" id="price_product"> </h4>
+
+                                            <div class="product-details-cart-wishlist" style="display: none;" id="orderbotton1">
+                                               <a href="tel:09120316231">
+                                                <button type="button"  class="btn" 
+                                                data-bs-target="#action-CartAddModal">جهت خرید تماس بگیرید
+                                                </button>
+                                               </a>
+                                            </div>
+
+                                            <div class="product-details-cart-wishlist" style="display: none;" id="orderbotton3">
+                                               <a href="/login">
+                                                <button type="button"  class="btn" 
+                                                data-bs-target="#action-CartAddModal">به سبد خرید اضافه کنید 
+                                                </button>
+                                               </a>
+                                            </div>
+
+                                            <div class="product-details-cart-wishlist" id="orderbotton2">
+                                                <button type="submit"  class="btn" data-bs-toggle="modal"
+                                                        data-bs-target="#action-CartAddModal">به سبد خرید اضافه کنید
+                                                </button>
+                                            </div>
+                                    </form>
+
+
+                                        </div>
+                                    </div>
+                                    <!--== End Product Info Area ==-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+
+</div>
+
+{% endblock %}
+
+
+{% block inpage_js_link %}
+
+<script src="{% static 'img/modernizr-3.11.7.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.3.2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'js/range-slider.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}
+
+{% block inpage_js %}
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    pagination: {
+        el: ".swiper-pagination",
+      },
+  });
+</script>
+
+<script>
+    // با استفاده از جی کوئری، در هنگام ارسال فرم
+$('.likeform').submit(function(event) {
+    event.preventDefault(); // جلوگیری از رفتن به لینک
+    
+    var form = $(this);
+    var url = form.attr('action'); // گرفتن آدرس عملیات
+    var method = form.attr('method'); // گرفتن روش عملیات (POST)
+    var formData = form.serialize(); // تبدیل داده‌های فرم به داده‌های ارسالی
+
+    $.ajax({
+        url: url, // آدرس عملیات
+        method: method, // روش عملیات
+        data: formData, // داده‌های ارسالی
+        success: function(response) {
+            // عملیات مورد نظر با موفقیت انجام شد
+            console.log(response);
+        },
+        error: function(error) {
+            // خطا در انجام عملیات
+            console.log(error);
+        }
+    });
+});
+</script>
+
+
+<script>
+    // با استفاده از جی کوئری، در هنگام ارسال فرم
+$('.order_form').submit(function(event) {
+    event.preventDefault(); // جلوگیری از رفتن به لینک
+    
+    var form = $(this);
+    var url = form.attr('action'); // گرفتن آدرس عملیات
+    var method = form.attr('method'); // گرفتن روش عملیات (POST)
+    var formData = form.serialize(); // تبدیل داده‌های فرم به داده‌های ارسالی
+
+    $.ajax({
+        url: url, // آدرس عملیات
+        method: method, // روش عملیات
+        data: formData, // داده‌های ارسالی
+        success: function(response) {
+            // عملیات مورد نظر با موفقیت انجام شد
+            console.log(response);
+        },
+        error: function(error) {
+            // خطا در انجام عملیات
+            console.log(error);
+        }
+    });
+});
+
+
+</script>
+
+<script>
+    var forms = document.getElementsByClassName('fast_visited');
+    for (var i = 0; i < forms.length; i++) {
+      forms[i].addEventListener('submit', function(event) {
+        event.preventDefault();
+      
+        var form = event.target;
+        var url = form.getAttribute('action');
+        var method = form.getAttribute('method');
+        var formData = new FormData(form);
+    
+        fetch(url, {
+          method: method,
+          body: formData
+        })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          var messageElement = document.getElementById('name_pro');
+          messageElement.textContent = data.message;
+    
+    
+          var productElement = document.getElementById('name_product');
+          productElement.textContent = data.product_name;
+    
+    
+          
+          var priceElement = document.getElementById('price_product');
+          priceElement.textContent = data.price_product;
+          var user = data.user_ahetnticate;
+    
+    
+    
+          var orderButtonElement = document.getElementById('orderbotton1');
+          var orderButton2Element = document.getElementById('orderbotton2');
+          var orderButton3Element = document.getElementById('orderbotton3');
+          if (user === null){
+            orderButtonElement.style.display = "none";
+            orderButton2Element.style.display = "none";
+            orderButton3Element.style.display = "flex";
+          }
+          else if (data.price_product === 'فروش عمده') {
+            orderButtonElement.style.display = "flex";
+            orderButton2Element.style.display = "none";
+        } else {
+            orderButtonElement.style.display = "none";
+            orderButton2Element.style.display = "flex";
+        }
+    
+          var textElement = document.getElementById('text_product');
+          textElement.innerHTML = data.text_product;
+    
+          var commentElement = document.getElementById('comment_count');
+          commentElement.innerHTML = data.comment_count;
+    
+    
+          
+          var starElement = document.getElementById('stars');
+          var divElement = document.createElement('div');
+          divElement.className = 'product-review-icon';
+          var starsCount = parseInt(data.stars); 
+          for (var i = 1; i <= 5; i++) {
+          var iconElement = document.createElement('i');
+          if (i <= starsCount) {
+              iconElement.className = 'fa fa-star';
+          } else if (i === starsCount + 1) {
+              iconElement.className = 'fa fa-star-o';
+          } else {
+               iconElement.className = 'fa fa-star-o';
+          }
+            divElement.appendChild(iconElement);
+          }
+          starElement.innerHTML = ''; 
+          starElement.appendChild(divElement);
+    
+    
+    
+          var imageElement = document.getElementById('image_product');
+          imageElement.setAttribute('src', data.img_link);
+    
+          var imageElement = document.getElementById('visit_input');
+          imageElement.setAttribute('value', data.id_pruduct);
+    
+          console.log(data);
+        })
+        .catch(function(error) {
+          console.error('خطا:', error);
+        });
+      });
+    }
+    </script>
+
+{% endblock %}
+
+

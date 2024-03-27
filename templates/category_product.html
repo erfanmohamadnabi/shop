@@ -1,0 +1,945 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>محصولات</title>{% endblock %}
+
+    <!-- CSS (Font, Vendor, Icon, Plugins & Style CSS files) -->
+
+    <!-- Font CSS -->
+    <!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+    <!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+    <!--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">-->
+
+    <!-- Vendor CSS (Bootstrap & Icon Font) -->
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+<link rel="stylesheet" href="{% static 'css/range-slider.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+        
+{% endblock %}
+    
+
+{% block content %}
+
+<div class="wrapper">
+
+    <main class="main-content">
+
+        <!--== Start Page Header Area Wrapper ==-->
+        <section class="page-header-area pt-10 pb-9" data-bg-color="#d3ff9d8e">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="page-header-st3-content text-center text-md-start">
+                            <ol class="breadcrumb justify-content-center justify-content-md-start">
+                                <li class="breadcrumb-item"><a class="text-dark" href="index-one.html">صفحه اصلی</a></li>
+                                <li class="breadcrumb-item active text-dark" aria-current="page">محصول</li>
+                            </ol>
+                            <h2 class="page-header-title">تمام محصولات</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <h5 class="showing-pagination-results mt-5 mt-md-9 text-center text-md-end">نمایش محصولات
+                            </h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Page Header Area Wrapper ==-->
+
+        <!--== Start Shop Top Bar Area Wrapper ==-->
+        <div class="shop-top-bar-area">
+
+            <form action="" method="post">
+                {% csrf_token %}
+            <div class="container">
+                <div class="shop-top-bar">
+                    <select class="select-shoing" name="filter">
+                        <option data-display="همه محصولات" value="0">همه محصولات</option>
+                        <option value="1">پرطرفدار</option>
+                        <option value="2">تخفیف ویژه</option>
+                        <option value="3">پرفروش ترین</option>
+                        <option value="4">ارزان  ترین</option>
+                        <option value="5">گران  ترین</option>
+                    </select>
+
+                    <div class="select-on-sale d-flex d-md-none">
+                        <select class="select-on-sale-form">
+                            <input class="btn" type="submit" value="اعمال فیلتر">
+                        </select>
+                    </div>
+                    <div class="select-price-range">
+                        <h4 class="title">قیمت گذاری</h4>
+                        <div class="select-price-range-slider">
+                            <div class="slider-range" id="slider-range"></div>
+                            <div class="slider-labels">
+                                <span id="slider-range-value1"></span>
+                                <span>-</span>
+                                <input hidden type="text" name="number2" id="input-value2" value="">
+                                <input hidden type="text" name="number" id="input-value" value="">
+                                
+                                <span id="slider-range-value2"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--                    <div class="select-price-range">-->
+                    <!--                        <h4 class="title">قیمت گذاری</h4>-->
+                    <!--                        <div class="select-price-range-slider">-->
+                    <!--                            <div class="slider-range noUi-target noUi-ltr noUi-horizontal noUi-background" id="slider-range"><div class="noUi-base"><div class="noUi-origin noUi-connect" style="right: 12.6582%;"><div class="noUi-handle noUi-handle-lower"></div></div><div class="noUi-origin noUi-background" style="left: 100%;"><div class="noUi-handle noUi-handle-upper"></div></div></div></div>-->
+                    <!--                            <div class="slider-labels">-->
+                    <!--                                <span id="slider-range-value1"> </span>-->
+                    <!--                                <span>-</span>-->
+                    <!--                                <span id="slider-range-value2"> </span>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+
+
+                    <div class="select-on-sale d-none d-md-flex">
+                        <select class="select-on-sale-form">
+                            <input class="btn" type="submit" value="اعمال فیلتر">
+                        </select>
+                    </div>
+                </div>
+            </div>
+         </form>
+        </div>
+    
+        <!--== End Shop Top Bar Area Wrapper ==-->
+
+        <!--== Start Product Category Area Wrapper ==-->
+        <section class="section-space pb-0">
+            <div class="container">
+                <div class="row g-3 g-sm-6">
+                    <div class="col-6 col-lg-4 col-lg-2 col-xl-2">
+                        <!--== Start Product Category Item ==-->
+                        <a href="product.html" class="product-category-item">
+                            <img style="margin: 25px;" width="70px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEH0lEQVR4nO2ZW2zbVBjHTZ3YicOmMbEHJMS4aEIajId19fHJKipBgVaDDTQmAVq5vFQdIBUemJBAFUJIXMZTxZDLCyDQgAo2JrHFuTiJ7cRxbK8jBYTUB8QuIB5B8MJl+9A5bbTEadq4SUrH/Ek/KbLP+b7/30n+J1IYJqj/ac1idt838Z7zhG8x+zBzOVUF94xX4uyF2TgLhEqcvVjB7CvMWi9gmKu+xuxbFcxCEyaBYXqYtVhzQwx/Wgp9chqHYClmcOioKTFR735ZlotTU1PgwVgV8bP9zDUzEqvNzAtcHoktub3MtbU9FhFP6br4Uziy2cWh707hMHix9myhLHZvfk9kc7WP67qwGF0Vb+Pw7S4OnXOpoHrMx3aAcuxzUI4fheIIbrhPkcI/u1J4+39iwML8XWXM/WpjDrzoY0OQPHkCDMOgJJUE6M/ublhnYw7KEve7jbjhVTVgo/B+S+L+LEtUwCUwD7mDI5BKpaBYLILjOBTymlxTJw7QNQ37EPe3MzmxOgZKiBsvSdwFS+KgltJOATKvvwDpdBpM02wQQq6pqgqZt18Cq//qur0WAfNgv3qgewam9zGsKXHvlCQevJh3boDU5GtU4GLiq5RKJbomdfhNMAc2NvQhlJ/fC65d7qyBk0MMbyJ+2iRiPRTuuQ6S7x+GbDYLlmU1FV+FrMnlcqB8IEPhvusb+hGs0UFwzUJnDJjS+o0FiTcKUgS8aLtvheRnH0M+n4dy+dJTWw6yluxRpo+A9tDWhr4E85Ht4OQz7RnQRP4mXYx8b6AIeMk9ikD58gvQNA1s225ZfBWyR9M0SBw/BrmR/ob+hMKuWyCPuC0rEq+j2B2aGDmvoyh4UcfuB+XEVzQiVyK+1oSxELPqMw82zKGIkV8MJPT6Ep+T+ME8iv6moSjUIQmQPvgEjUQymETkSsVXcRwHCoUC7ZmaeBryklA/c54/NFHY1ZJ4VRQezyLhrxwSoI74eki+8SKNyWrGtyverTFBepLeyqGXIbdzQ/1sgij8k0XC6JLiM2L0ORUJF7NIgFrUgU2gvHto2ZhsF3PhrKCzBjZBgw6qLTre3AASVBXFoJbMvTdC4sP3ui7erTkrSCSTmWS2V48qCummBtK9kRsyYuxMRowBIf3AVkh8+hHN7VYyvlNYC2dFYvoIpPZso1oofbGf0jv4m5f8GCX6YrclxdgZ5alBGnF+M75T2DUxqzx5NyT7Yj8SbUyrpSgK6LreVkx2woSu60C0MH6r3YzvpAnDMPwb8BuTc6MS/DC8riXmxuK+ejuO49+A3yfVqvgqfvszgQE3eAcg+Aj5qeBLPBykEAQx6gYH2brgJHav2J8SU03+cGiGXwN++zNXnAFZls+tIQNnV/IODPsx0UUDZ2VZHvJtIKiggmIui/oX2lR7CRtrfm4AAAAASUVORK5CYII=">
+                            <h3 class="title">مصرف خانگی</h3>
+                            <span class="flag-new">جدید</span>
+                        </a>
+                        <!--== End Product Category Item ==-->
+                    </div>
+                    <div class="col-6 col-lg-4 col-lg-2 col-xl-2">
+                        <!--== Start Product Category Item ==-->
+                        <a href="product.html" class="product-category-item" data-bg-color="#FFEDB4">
+                            <img style="margin: 25px;" width="70px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAANb0lEQVR4nO2bB1RWVxKA50c60kRAEBFEiiKiqNgRGz12QBQRAbGAuqBiiQkmxhZ7S1BBrEhZE4NG10I0GqNRV11LVtdYMXbFCkbK7Jn73vv9ywP+QkyyZ+85c47+77375ntz79y5MxeA/7f32iQA4AoAXQAgBACiACAcAIL436zhf6D5AMB8ADgEAM8BAGuR+wCwBwCSAaAp/EWaCQCkAcBlRSAHazPs3LIxBvu6YFQvTwz3c8fANg7Y0dUGTY30xD5AEQCEAYAO/AmbHllGwlmJKWxjYYJJ/dvj7rmReK9gEmLRh8qyMwkxPwGr8hLw+upIzB7vhwN9ndDYQFcW/CwAdIM/UXMFgFOCgh3c7XHX3Ags3z9DHFJWvhrLgBXlafYInBfVARtZGAnQVQCQBQDGfzRstEQCr0gpp0bmuGP2YKw6WAskycGZiLsmicLKysvNI3HKB16oV09HAD/Pf+A/pE3ivzwO7dkSnxVOqQVyBuLuFMSvkxALRtcKKyunFwxAJ2tTAfohALR537Bp9HKJBHB5Ut+aQQ9MRyycgFigOqCYPNkwAv097QTop/wq8F7aUAF29cTAGmBnIhbWPmzF5LecOHy1JVbp99KtsRjg3ViAvgsATX5vWC+JBF7TC2uE3T8NcYe4Q1JFOrvZYOMGJliRGy8K7dvcWoAmZ6n/e8EaAsAVetHIgNbVw+6dgpiv3hxVlNQwLxzQoSlbrsSu3107DB2sTAToeb8XcDq9wMvZBkv3TBOH3TNZ67mqqhR9HMKmFQBUAIBvXcM6SyRQRi84uiJGHPYfU7W2bHVyf/1wXDC8A5Zkx8j9nhTYUrDyMT5er7OWQR3HBHhVM2enq73UqCPzh3VgYOvHdJf7nT6AlamBAD2kzmiDfBwTh/h54MMdKdI1tWr3RKwoiMeKnOFYvmEAlmf246U/lm8YhBWbIrBqm7xFapN764ZjrL8bnlk4UCnyWpvYjQUiis8sHdlJAD5TZ8C4d/Jhio4qC5OxYmsUvs0Mw7frQlWT9R9g5eYolYALpwUw5WcM9Fb5I5HXbmhqKED31B62MNG4Yuf4KrKiAFGWEYJHp3fFuYM8MLyDPfo0NccmDYyYuDUywRAvG5zd3x3PpPtJnyHrV21XtpCskFc++mkYg1BnZMwc2EYAztcauLIgMUNQ+txsPxzf0wmtTfVr29tKxd/dCk9/3J23dhhW5Yyo8zl+Y02k4LFLAcBMK+DyrVEvzqb74ZD2dqgjkUhBrG1sMSZuNC5fsw537i3CUxf+g2d+voY/nDqP2dvyMTZhDJqamrF7dXUkuHJYK6m1q7bVPXRXd1tBtxiNYb0dGjQe2tFBCmpoaIQJY5Nw73c/4OPXlfi0DGuUWw+e45ikiSjhn58/uAUPHaa2Q6tNlr1zXjma8g4yNtB9KYCOTZ6E/75xt1ZIMVmVkYU6Ojps2K2IEiwdhlW56s3VmuTCksEC8AN112TaZG8Rhm7PPgF44eptjUBlZeWXmaijI2HQG+Pa8I6sP2KecrysiVTlJaCtuTRh4KEqLGUPT9BDxiYmuHjFF/iktEprWEEWLl3JFDLWr8ccIEFXbAqvMyuH+jQRgGlHV2tzAYCrLHvh3AxP/uuyqNL7Dv+IgyOicNXabLz+pALP332Lp4t/Y/Lz/XK89bgUN+XuwLtPS0WfjxsSxJRqYVcfX6wJ5pxYLcuVqjJrcFsBeEFtsK4SLpOAbX3a45Vb95UUPXX+ChvewlD39QvEby+9VpJxHy5h16OiR4oCP7xxCd3tzdk9nw3y4Ib2hgF1Arx1gr9K67ENAPwizNfiRy/lFKQh/fGc+ahvwMWs9c0sMGrsdMw7/qsocNa+i2hoxG3d9hQdVQIuef4CD88OZdfNjHSxeHEfzsp1sD5//0mYAHy8pjzySbrJp70v3nn8Sk656/eeYt+gENYJLS2BQ2Ix98c7oqCyEjkmjT0zbkKKspVfV8jNt5mhzbm5nD1Ya+BrqyIF4FvVAZPpsZlLc/xP8UM5xX6+/iu28GzFWcLSCj9du7NWUEHmrC9kz/UOCBIBLmfKHZ/bj91ja2aAr77g53JenFbAj7NGCMBPxGCHMRgzczx98aoSLDkuuu7o4oEbD15WGZZkfvZe9mw3P38l4GclJVIFvRwbsPsKxrVjwJVbh2kF/GbbKAH4jSKsvYTL/OHqddlyCt28/wxbtfZmD7p5tVdpCCvK1M+z2fODwocqAb+4c1mqIG3q6b747o7csN4wSCvg8u1xAvBbReBv6EJwWD85ZR69qsAePXtLLZt7rFhtWJLQqETWx6xP5ioBl17aL1Xw7OcDuXdZGXHRV2aYVsCvtsQKwC9kYTvRjxTYX755T04ZUpCuWTa0xY1FVzSCLTz/HK1s7Vk/RcdOKQGXf7dYLjoSCmn3lwVw8zh3lMbADzOjZcNLadtLP06d8ZGcIoeO/xP19PRQoqPDnI4msCQzlm3lpoNHC5El6SViQaKckp1cbdj9h9O6aL08XXgXT18QYH0F6167+0ROmS7d/NjN/aLHawy76/wLdHLzZP0sXLpKCfj15SNKSkZ1dWH3b4rn4uvKbcM1Bj7wUbAAfEAAZpuClKkz5BTJ+/pb6fKTf+KuxsDJ6Vys7NjUCe8//03ON9ASFdHDU0nJ5CAu87gm2ov31Kqlg8QkY3Q3AThLCDJYpe/4mUtywH7+vdiNCWnzNYalCMu4Plfwyty8Xa7/ZavXcvFzYwvRpDtdWxTRkgPeojlwMv/xACAF+LMV6OLqJqfMxV+K2V7VwNC42nCxNtl59im6t+aWmIFDIuX6p1DVxrYRt96m9lZScnygooU1X4u7eXDvAYA+BLyI/jMxNU1OoSUrv+SChMBBGsHuvvASuwdxzsKhiSMLR2X7T5o0mV2jepFY6SS8szO7npPowwNrNodLt8aigV49oRJhDvxExs15X8kpRLkn+n38rGXqw158JV1zzc0t8NjpC3J9F+47xEaPbj0dPDm/v6iiQmHsnZfWLPXzXTq3IeH3BqwVs45PnJFTyr93X3ajOrEyyTfnStA/NII9SzupXfsPy/VLqwBZnK5/EtFOVMm32+PYeQ7KgjxZGciAUcN4ekKwp1JxjVKYeONeiZxiAcHcl5mbuVtlWApKPNt15Ty7mTnLWsr2ee/ZG+zavQe7TusshXxiSpLV6Z7mNibS3LUmsJV58WhvaSwAtxWAaWzjw5flcsqNjOeGZNzkuSoN4WmLNqKpuSV7xs6+MR756ZzS/jl86HB2nWq8xV9W73U/4jMUyb2cuFh64xCNgHdPDxRg6biUtD2jHxWdSs7fua2clY1dtV6aQGkH5NGmozTjQXH41TuP5Pqi1O2o0WPZdQoZKVauTklyYELmY29KR60cVqC3g6BXqiwwFZvwwJETShsGIcqya9IMU+etx3XfnmPr6mfrd2F08ix0cHaVgto2smNpV8XkHo2cyGHcftRIXxf3fRhco5J7ZgRKNw6lGSGsKqFJBpMKbxKu6kApZQtZ4HX0AkrXKIZ8tBZ7tJROelGxb+yAM9PnKGVFBAfVJzBYatlD6aEqr5kLw1toNZxlznwsUtwSfsAchJu7aNXgXkkZLlq+huW1nJu5MCHLU5omf+ceNhKUshdliEU/nMQmjk3ZS6mK99M88eVHVvJTuC2ojak+PlrBeeeqHPUzl9+k9ZXNcFgqAtcDgOt0AwUbYsqrI78+eY2paTNRX19fGljcrsFByW7hBI+aEdOaz2epv/GnmrGMZ54A1TSqkqOhkRHLL2sCSqNjY04B2yBQX1R3SgltxdZUVZaPkLZc8q5Lc0t8szaEz0urV3KhfujQCw97pLYDqGwuGxubsPSOqpUFmrtLV2WgS/N3Dqxds4YqDWHFuJmG8s3Pe3OeeXOk2taVqQeX8AWEGpsuAGQKSrf2bstKKlTulJ2nV24/YPOTdjoUnNCoEJ5xsTVjWzGxc1RiQvcJkZChng4enNKJCzSyBqrtmYXzHlTJBYC+oEYbbqBbjya7FITmo4WFpRycIDR0u7doxHY8qoKSPNsYI81BE+zuSb7voqrcOLWGsYxlKwEgDjRoBu2cG6YGt3F41tS6vrCeMaGA383OHCM6N8OscX74YL36QcGuaQEs2mIevL4+7kvtJD33oU6p9FFWNAa1kQYXFVoVvanh2kQ9zE9IL9s2qoy8H1lFXThZoXMawbxzIvF1tsBrC3rxmUk66xGrslXpY1ubSQ+tPAaAYKirhjsSHDA/4QvMjy9VF/LmmqG4JKaj7DlItDDWw6VDPblIis3ZASpVFyihTqfjvZtyiXpevgcAxzqDlW349UgLzI8fN7avxy80tFs1scRh3VxwWn9vljxfHtsJP41sh38LbYVh7Rxl10M5iehgj7ljfPD24j5Ysalmb0ybDPIPMT1cZQ+bCadmo+v6pF11bSrvDVEFob932M7vR1mdWVboMGhbZysWClKmkjIdFPTTH3lYmIieCjrHOyY61PpemwG/xxwBANP5YvMCPnadCAADAMBTwQL0764AMIc/B1mmwgej+XmQP3zeEv7iTQcAnADAHwD684U8+kOtQADoDAC2f7SC8Fdv/wVU//pWLvjC1gAAAABJRU5ErkJggg==">
+                            <h3 class="title">کوکوپیت</h3>
+                        </a>
+                        <!--== End Product Category Item ==-->
+                    </div>
+                    <div class="col-6 col-lg-4 col-lg-2 col-xl-2 mt-lg-0 mt-sm-6 mt-4">
+                        <!--== Start Product Category Item ==-->
+                        <a href="product.html" class="product-category-item" data-bg-color="#DFE4FF">
+                            <img style="margin: 25px;" width="70px" src="data:image/png;base64,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">
+                            <h3 class="title">خوراکی</h3>
+                        </a>
+                        <!--== End Product Category Item ==-->
+                    </div>
+                    <div class="col-6 col-lg-4 col-lg-2 col-xl-2 mt-xl-0 mt-sm-6 mt-4">
+                        <!--== Start Product Category Item ==-->
+                        <a href="product.html" class="product-category-item" data-bg-color="#FFEACC">
+                            <img style="margin: 25px;" width="70px" src="data:image/png;base64,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">
+                            <h3 class="title">کوکوچیپس </h3>
+                            <span data-bg-color="#835BF4" class="flag-new">فروش</span>
+                        </a>
+                        <!--== End Product Category Item ==-->
+                    </div>
+                    <div class="col-6 col-lg-4 col-lg-2 col-xl-2 mt-xl-0 mt-sm-6 mt-4">
+                        <!--== Start Product Category Item ==-->
+                        <a href="product.html" class="product-category-item" data-bg-color="#FFDAE0">
+                            <img style="margin: 25px;" width="70px" src="data:image/png;base64,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">
+                            <h3 class="title">بذر</h3>
+                        </a>
+                        <!--== End Product Category Item ==-->
+                    </div>
+                    <div class="col-6 col-lg-4 col-lg-2 col-xl-2 mt-xl-0 mt-sm-6 mt-4">
+                        <!--== Start Product Category Item ==-->
+                        <a href="product.html" class="product-category-item" data-bg-color="#FFF3DA">
+                            <img style="margin: 25px;" width="70px" src="data:image/png;base64,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">
+                            <h3 class="title">گل و گیاه
+                            </h3>
+                        </a>
+                        <!--== End Product Category Item ==-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Product Category Area Wrapper ==-->
+
+        <!--== Start Product Area Wrapper ==-->
+        <section class="section-space">
+            <div class="container">
+                <div class="row mb-n4 mb-sm-n10 g-3 g-sm-6">
+
+
+                    <!-- {% for x in products|slice:":3" %}
+                    
+                    <div class="col-6 col-lg-4 mb-4 mb-sm-8">
+                        <div class="product-item">
+                            <div class="product-thumb">
+                                <a class="d-block" href="product-details.html">
+                                    <img src="{{ x.image.url }}" width="370" height="450"  alt="Image-HasTech">
+                                </a>
+                                <span class="flag-new">جدید</span>
+                                <div class="product-action">
+                                    <button type="button" class="product-action-btn action-btn-quick-view"
+                                            data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                        <i class="fa fa-expand"></i>
+                                    </button>
+                                    <button type="button" class="product-action-btn action-btn-cart"
+                                            data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                                        <span>به سبد خرید اضافه کنید</span>
+                                    </button>
+                                    <button type="button" class="product-action-btn action-btn-wishlist"
+                                            data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                        <i class="fa fa-heart-o"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-rating">
+                                    <div class="rating">
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-half-o"></i>
+                                    </div>
+                                    <div class="reviews">150 بررسی</div>
+                                </div>
+                                <h4 class="title"><a href="product-details.html">{{ x.name }}</a></h4>
+                                <div class="prices">
+                                    <span class="price">{{ x.price }} تومان</span>
+                                    {% if x.price_percent %}
+                                    <span class="price-old">{{ x.price_percent }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="product-action-bottom">
+                                <button type="button" class="product-action-btn action-btn-quick-view"
+                                        data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                    <i class="fa fa-expand"></i>
+                                </button>
+                                <button type="button" class="product-action-btn action-btn-wishlist"
+                                        data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                    <i class="fa fa-heart-o"></i>
+                                </button>
+                                <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal"
+                                        data-bs-target="#action-CartAddModal">
+                                    <span>به سبد خرید اضافه کنید</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %} -->
+
+                    {% if page_obj %}
+                    {% for x in page_obj %}
+                    {% if x.active == True %}
+                    <div class="col-6 col-lg-4 mb-4 mb-sm-8">
+                        <!--== Start Product Item ==-->
+                        <div class="product-item">
+                            <div class="product-thumb">
+                                <a class="d-block" href="{{ x.get_absolute_url }}">
+                                    <img src="{{ x.image.url }}" width="370" height="450" alt="Image-HasTech">
+                                </a>
+                                <!-- {% if x.id > last %}
+                                <span class="flag-new">جدید</span>
+                                {% endif %} -->
+                                <div class="product-action">
+
+
+                                    <form action=""  class="fast_visited" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" value="{{ x.id }}" hidden name="fast_visit">
+                                        <button type="submit" class="product-action-btn action-btn-quick-view"
+                                            data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                            <i class="fa fa-expand"></i>
+                                        </button>
+                                    </form>
+
+                                    {% if request.user.is_authenticated %}
+                                    {% if x.buy == False %}
+                                    <form action="" class="order_form" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-cart"
+                                            data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                                        <span>به سبد خرید اضافه کنید</span>
+                                        </button>
+                                    </form>
+                                    {% else %}
+                                        <a href="tel:09120316231">
+                                            <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-cart"
+                                             data-bs-target="#action-CartAddModal">
+                                        <span> جهت خرید تماس بگیرید</span>
+                                        </button>
+                                        </a>
+                                    {% endif %}
+                                    {% else %}
+                                    <a href="/login">
+                                        <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                    <button type="submit" class="product-action-btn action-btn-cart"
+                                         data-bs-target="#action-CartAddModal">
+                                         <span>به سبد خرید اضافه کنید</span>
+                                    </button>
+                                    </a>
+                                    {% endif %}
+
+
+                                    <form action="" class="likeform" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" value="{{ x.id }}" name="like" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-wishlist"
+                                            data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                        <i class="fa fa-heart-o"></i>
+                                        </button>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-rating">
+                                    <div class="rating">
+                                        {% if x.ranking_AVG == 1 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 2 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 3 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 4 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% elif x.ranking_AVG == 5 %}
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% else %}
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        <i class="fa fa-star-o"></i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="reviews">{{ x.cmcm }} دیدگاه</div>
+                                </div>
+                                <h4 class="title"><a href="{{ x.get_absolute_url }}">{{ x.name }}</a></h4>
+                                <div class="prices">
+                                    {% if x.buy == False %}
+                                    <span class="price">{{ x.price }} تومان</span>
+                                    {% if x.price_percent %}
+                                    <span class="price-old">{{ x.price_percent }}</span>
+                                    {% endif %}
+                                    {% else %}
+                                    <span class="price">فروش عمده</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="product-action-bottom">
+                                <form style="width: 48%;background-color: aqua;" action="" method="post" name="myForm" class="fast_visited">
+                                    {% csrf_token %}
+                                    <input type="text" value="{{ x.id }}" hidden name="fast_visit">
+                                    <button style="width: 100%;" type="submit" class="product-action-btn action-btn-quick-view"
+                                        data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                    <i class="fa fa-expand"></i>
+                                    </button>
+                                </form>
+
+
+
+
+
+                                <form style="display: flex;align-items: center;justify-content: center;background-color: #f7f7f7;width: 48%;" class="product-action-btn action-btn-wishlist likeform" method="post" action="">
+                                    {% csrf_token %}
+                                    <input type="text" value="{{ x.id }}" name="like" hidden>
+                                    <button style="border: none;" type="submit" class="product-action-btn action-btn-wishlist"
+                                        data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                    <i class="fa fa-heart-o"></i>
+                                    </button>
+                                </form>
+
+                                </form>
+                                {% if request.user.is_authenticated %}
+                                {% if x.buy == False %}
+                                <form style="width: 100%;height: 100%;" class="order_form" action="" method="post">
+                                    {% csrf_token %}
+                                    <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                    <button type="submit" class="product-action-btn action-btn-cart" data-bs-toggle="modal"
+                                            data-bs-target="#action-CartAddModal">
+                                        <span>به سبد خرید اضافه کنید</span>
+                                    </button>
+                                </form>
+                                {% else %}
+                                <a style="width: 100%;" href="tel:09120316231">
+                                        {% csrf_token %}
+                                        <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                        <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal">
+                                                <span> جهت خرید تماس بگیرید</span>
+                                        </button>
+                                </a>
+                                {% endif %}
+                                {% else %}
+                                <a style="width: 100%;" href="/login">
+                                    {% csrf_token %}
+                                    <input type="text" name="order_add" value="{{ x.id }}" hidden>
+                                    <button type="button" class="product-action-btn action-btn-cart" data-bs-toggle="modal">
+                                        <span>به سبد خرید اضافه کنید</span>
+                                    </button>
+                            </a>
+                                {% endif %}                            </div>
+                        </div>
+                        <!--== End prPduct Item ==-->
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    <p style="align-self: center;text-align: center;">هیچ محصولی در این دسته بندی وجود ندارد</p>
+                    {% endif %}
+                    
+                    
+                  
+                   
+                 
+
+                    <div class="col-12" dir="ltr">
+                        <ul class="pagination justify-content-center me-auto ms-auto mt-5 mb-0 mb-sm-10">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link previous" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                        <span class="fa fa-chevron-left" aria-hidden="true"></span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                    
+                            {% for num in page_obj.paginator.page_range %}
+                                <li class="page-item">
+                                    <a class="page-link {% if num == page_obj.number %}active{% endif %}" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endfor %}
+                    
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link next" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                        <span class="fa fa-chevron-right" aria-hidden="true"></span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+        <!--== End Product Area Wrapper ==-->
+
+        <!--== Start Product Banner Area Wrapper ==-->
+        <section>
+            <div class="container">
+                <!--== Start Product Category Item ==-->
+                <a href="/Producst_List" class="product-banner-item">
+                    <img src="{% static 'img/banner7.jpg' %}" width="1170" height="240" alt="Image-HasTech">
+                </a>
+                <!--== End Product Category Item ==-->
+            </div>
+        </section>
+        <!--== End Product Banner Area Wrapper ==-->
+
+        <!--== Start Product Area Wrapper ==-->
+        <section class="section-space">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title">
+                            <h2 class="title">محصولات مرتبط</h2>
+                            <p class="m-0">ابزار است برای خانم‌ها و آقایانی که قصد خرید محصولاتی عالی و اصلی را دارند و
+                                می‌خواهند </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-n10">
+                    <div class="col-12">
+                        <div class="swiper related-product-slide-container">
+                            <div class="swiper-wrapper">
+
+                                {% for y in products|slice:"3" %}
+                                <div class="swiper-slide mb-8">
+                                    <!--== Start Product Item ==-->
+                                    <div class="product-item">
+                                        <div class="product-thumb">
+                                            <a class="d-block" href="{{ y.get_absolute_url }}">
+                                                <img src="{{ y.image.url }}" style="width: 100%;height: 450px;"
+                                                     alt="Image-HasTech">
+                                            </a>
+                                            <span class="flag-new">جدید</span>
+                                            <div class="product-action">
+
+
+                                                <form action=""  class="fast_visited" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="text" value="{{ y.id }}" hidden name="fast_visit">
+                                                    <button type="submit" class="product-action-btn action-btn-quick-view"
+                                                        data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                                        <i class="fa fa-expand"></i>
+                                                    </button>
+                                                </form>
+
+
+                                                {% if request.user.is_authenticated %}
+                                                {% if y.buy == False %}
+                                                <form action="" class="order_form" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="text" name="order_add" value="{{ y.id }}" hidden>
+                                                    <button type="submit" class="product-action-btn action-btn-cart"
+                                                        data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                                                    <span>به سبد خرید اضافه کنید</span>
+                                                    </button>
+                                                </form>
+                                                {% else %}
+                                                    <a href="tel:09120316231">
+                                                        <input type="text" name="order_add" value="{{ y.id }}" hidden>
+                                                    <button type="submit" class="product-action-btn action-btn-cart"
+                                                         data-bs-target="#action-CartAddModal">
+                                                    <span> جهت خرید تماس بگیرید</span>
+                                                    </button>
+                                                    </a>
+                                                {% endif %}
+                                                {% else %}
+                                                <a href="/login">
+                                                    <input type="text" name="order_add" value="{{ y.id }}" hidden>
+                                                <button type="submit" class="product-action-btn action-btn-cart"
+                                                     data-bs-target="#action-CartAddModal">
+                                                     <span>به سبد خرید اضافه کنید</span>
+                                                </button>
+                                                </a>
+                                                {% endif %}
+
+
+                                                <form action="" class="likeform" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="text" value="{{ y.id }}" name="like" hidden>
+                                                    <button type="submit" class="product-action-btn action-btn-wishlist"
+                                                        data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                                    <i class="fa fa-heart-o"></i>
+                                                    </button>
+                                                </form>
+
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="product-rating">
+                                                <div class="rating">
+                                                    {% if y.ranking_AVG == 1 %}
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    {% elif y.ranking_AVG == 2 %}
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    {% elif y.ranking_AVG == 3 %}
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    {% elif y.ranking_AVG == 4 %}
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    {% elif y.ranking_AVG == 5 %}
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    {% else %}
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="reviews">{{ y.cmcm }} دیدگاه</div>
+                                            </div>
+                                            <h4 class="title"><a href="{{ y.get_absolute_url }}">{{ y.name }}</a>
+                                            </h4>
+                                            <div class="prices">
+                                                {% if y.buy == False %}
+                                                <span class="price">{{ y.price }} تومان</span>
+                                                {% if y.price_percent %}
+                                                <span class="price-old">{{ y.price_percent }}</span>
+                                                {% endif %}
+                                                {% else %}
+                                                <span class="price">فروش عمده</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="product-action-bottom">
+
+                                            <form style="width: 48%;" action="" method="post" name="myForm" class="fast_visited">
+                                                {% csrf_token %}
+                                                <input type="text" value="{{ y.id }}" hidden name="fast_visit">
+                                                <button style="width: 100%;" type="submit" class="product-action-btn action-btn-quick-view"
+                                                    data-bs-toggle="modal" data-bs-target="#action-QuickViewModal">
+                                                <i class="fa fa-expand"></i>
+                                                </button>
+                                            </form>
+            
+            
+            
+            
+            
+                                            <form style="display: flex;align-items: center;justify-content: center;background-color: #f7f7f7;width: 48%;" class="product-action-btn action-btn-wishlist likeform" method="post" action="">
+                                                {% csrf_token %}
+                                                <input type="text" value="{{ y.id }}" name="like" hidden>
+                                                <button style="border: none;" type="submit" class="product-action-btn action-btn-wishlist"
+                                                    data-bs-toggle="modal" data-bs-target="#action-WishlistModal">
+                                                <i class="fa fa-heart-o"></i>
+                                                </button>
+                                            </form>
+            
+                                            
+                                        {% if request.user.is_authenticated %}
+                                        {% if y.buy == False %}
+                                        <form style="width: 100%;height: 100%;" class="order_form" method="post" action="">
+                                            {% csrf_token %}
+                                            <input type="text" name="order_add" value="{{ y.id }}" hidden>
+                                            <button type="submit" class="product-action-btn action-btn-cart"
+                                                    data-bs-toggle="modal" data-bs-target="#action-CartAddModal">
+                                                <span>به سبد خرید اضافه کنید</span>
+                                            </button>
+                                        </form>
+                                        {% else %}
+                                        <a style="width: 200%;height: 100%;" href="tel:09120316231">
+                                            <input type="text" name="order_add" value="{{ y.id }}" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-cart"
+                                             data-bs-target="#action-CartAddModal">
+                                        <span> جهت خرید تماس بگیرید</span>
+                                        </button>
+                                        </a>
+                                        {% endif %}
+                                        {% else %}
+                                        <a style="width: 100%;" href="/login">
+                                            <input type="text" name="order_add" value="{{ y.id }}" hidden>
+                                        <button type="submit" class="product-action-btn action-btn-cart"
+                                             data-bs-target="#action-CartAddModal">
+                                             <span>به سبد خرید اضافه کنید</span>
+                                        </button>
+                                        </a>
+                                        {% endif %}
+
+                                        </div>
+                                    </div>
+                                    <!--== End prPduct Item ==-->
+                                </div>
+
+                                
+                                {% endfor %}
+
+                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--== End Product Area Wrapper ==-->
+
+    </main>
+
+
+
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+    <aside class="product-cart-view-modal modal fade" id="action-QuickViewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="product-quick-view-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                            <span class="fa fa-close"></span>
+                        </button>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!--== Start Product Thumbnail Area ==-->
+                                    <div class="product-single-thumb">
+                                        <img src="" width="544" height="560" id="image_product" alt="Image-HasTech">
+                                    </div>
+                                    <!--== End Product Thumbnail Area ==-->
+                                </div>
+                                <div class="col-lg-6">
+                                    <!--== Start Product Info Area ==-->
+                                    <div class="product-details-content">
+                                        <h5 class="product-details-collection" id="name_pro"></h5>
+                                        <h3 class="product-details-title" id="name_product"></h3>
+                                        <div class="product-details-review mb-5">
+                                            <div class="product-review-icon" id="stars">
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-half-o"></i>
+                                            </div>
+                                            <button type="button" class="product-review-show" id="comment_count"></button>
+                                        </div>
+                                        <p class="mb-6" id="text_product"></p>
+
+
+                                    <form action="" method="post" class="order_form">
+                                        {% csrf_token %}
+                                        <input type="text" name="order_add" value="" id="visit_input" hidden>
+                                        <div class="product-details-pro-qty">
+                                            <div class="pro-qty">
+                                                <input type="text" title="Quantity" name="count" value="01">
+                                            </div>
+                                        </div>
+                                        <div class="product-details-action">
+                                            <h4 class="price" id="price_product"> </h4>
+
+                                            <div class="product-details-cart-wishlist" style="display: none;" id="orderbotton1">
+                                               <a href="tel:09120316231">
+                                                <button type="button"  class="btn" 
+                                                data-bs-target="#action-CartAddModal">جهت خرید تماس بگیرید
+                                                </button>
+                                               </a>
+                                            </div>
+
+                                            <div class="product-details-cart-wishlist" style="display: none;" id="orderbotton3">
+                                               <a href="/login">
+                                                <button type="button"  class="btn" 
+                                                data-bs-target="#action-CartAddModal">به سبد خرید اضافه کنید 
+                                                </button>
+                                               </a>
+                                            </div>
+
+                                            <div class="product-details-cart-wishlist" id="orderbotton2">
+                                                <button type="submit"  class="btn" data-bs-toggle="modal"
+                                                        data-bs-target="#action-CartAddModal">به سبد خرید اضافه کنید
+                                                </button>
+                                            </div>
+                                    </form>
+
+
+                                        </div>
+                                    </div>
+                                    <!--== End Product Info Area ==-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+</div>
+
+
+
+{% endblock %}
+
+
+
+{% block inpage_js_link %}
+
+<script src="{% static 'img/modernizr-3.11.7.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.3.2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'js/range-slider.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}
+
+{% block inpage_js %}
+
+<script>
+    // با استفاده از جی کوئری، در هنگام ارسال فرم
+$('.likeform').submit(function(event) {
+    event.preventDefault(); // جلوگیری از رفتن به لینک
+    
+    var form = $(this);
+    var url = form.attr('action'); // گرفتن آدرس عملیات
+    var method = form.attr('method'); // گرفتن روش عملیات (POST)
+    var formData = form.serialize(); // تبدیل داده‌های فرم به داده‌های ارسالی
+
+    $.ajax({
+        url: url, // آدرس عملیات
+        method: method, // روش عملیات
+        data: formData, // داده‌های ارسالی
+        success: function(response) {
+            // عملیات مورد نظر با موفقیت انجام شد
+            console.log(response);
+        },
+        error: function(error) {
+            // خطا در انجام عملیات
+            console.log(error);
+        }
+    });
+});
+</script>
+
+<script>
+    // با استفاده از جی کوئری، در هنگام ارسال فرم
+$('.order_form').submit(function(event) {
+    event.preventDefault(); // جلوگیری از رفتن به لینک
+    
+    var form = $(this);
+    var url = form.attr('action'); // گرفتن آدرس عملیات
+    var method = form.attr('method'); // گرفتن روش عملیات (POST)
+    var formData = form.serialize(); // تبدیل داده‌های فرم به داده‌های ارسالی
+
+    $.ajax({
+        url: url, // آدرس عملیات
+        method: method, // روش عملیات
+        data: formData, // داده‌های ارسالی
+        success: function(response) {
+            // عملیات مورد نظر با موفقیت انجام شد
+            console.log(response);
+        },
+        error: function(error) {
+            // خطا در انجام عملیات
+            console.log(error);
+        }
+    });
+});
+
+
+</script>
+
+<script>
+    var forms = document.getElementsByClassName('fast_visited');
+    for (var i = 0; i < forms.length; i++) {
+      forms[i].addEventListener('submit', function(event) {
+        event.preventDefault();
+      
+        var form = event.target;
+        var url = form.getAttribute('action');
+        var method = form.getAttribute('method');
+        var formData = new FormData(form);
+    
+        fetch(url, {
+          method: method,
+          body: formData
+        })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          var messageElement = document.getElementById('name_pro');
+          messageElement.textContent = data.message;
+    
+    
+          var productElement = document.getElementById('name_product');
+          productElement.textContent = data.product_name;
+    
+    
+          
+          var priceElement = document.getElementById('price_product');
+          priceElement.textContent = data.price_product;
+          var user = data.user_ahetnticate;
+    
+    
+    
+          var orderButtonElement = document.getElementById('orderbotton1');
+          var orderButton2Element = document.getElementById('orderbotton2');
+          var orderButton3Element = document.getElementById('orderbotton3');
+          if (user === null){
+            orderButtonElement.style.display = "none";
+            orderButton2Element.style.display = "none";
+            orderButton3Element.style.display = "flex";
+          }
+          else if (data.price_product === 'فروش عمده') {
+            orderButtonElement.style.display = "flex";
+            orderButton2Element.style.display = "none";
+        } else {
+            orderButtonElement.style.display = "none";
+            orderButton2Element.style.display = "flex";
+        }
+    
+          var textElement = document.getElementById('text_product');
+          textElement.innerHTML = data.text_product;
+    
+          var commentElement = document.getElementById('comment_count');
+          commentElement.innerHTML = data.comment_count;
+    
+    
+          
+          var starElement = document.getElementById('stars');
+          var divElement = document.createElement('div');
+          divElement.className = 'product-review-icon';
+          var starsCount = parseInt(data.stars); 
+          for (var i = 1; i <= 5; i++) {
+          var iconElement = document.createElement('i');
+          if (i <= starsCount) {
+              iconElement.className = 'fa fa-star';
+          } else if (i === starsCount + 1) {
+              iconElement.className = 'fa fa-star-o';
+          } else {
+               iconElement.className = 'fa fa-star-o';
+          }
+            divElement.appendChild(iconElement);
+          }
+          starElement.innerHTML = ''; 
+          starElement.appendChild(divElement);
+    
+    
+    
+          var imageElement = document.getElementById('image_product');
+          imageElement.setAttribute('src', data.img_link);
+    
+          var imageElement = document.getElementById('visit_input');
+          imageElement.setAttribute('value', data.id_pruduct);
+    
+          console.log(data);
+        })
+        .catch(function(error) {
+          console.error('خطا:', error);
+        });
+      });
+    }
+    </script>
+    
+
+
+{% endblock %}

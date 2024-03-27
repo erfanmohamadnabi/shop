@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>{{ info.title }}</title>{% endblock %}
+
+
+{% block meta %}
+<meta charset="utf-8">
+
+<meta name="google-site-verification" content="hHgzvNWiwzW3LwWzvea4PVJ6dbNHytbQSfcA9aQ9xSU" />
+
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<meta property="og:title" content="{{ info.title_seo }}" class="title_seo" />
+
+<meta name="description" content="{{ info.meta_seo }}">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<meta content="{{ info.keywords }}" name="keywords"/>
+
+<meta content="{{ info.writer }}" name="author"/>
+
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo.png' %}">
+{% endblock %}
+
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/fancybox.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+<link rel="stylesheet" href="{% static 'css/range-slider.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+        
+{% endblock %}
+
+{% block content %}
+
+<div class="wrapper">
+
+    <main class="main-content">
+
+        <!--== Start Page Header Area Wrapper ==-->
+        <nav style="background-color: #d3ff9d8e;" aria-label="breadcrumb" class="breadcrumb-style1">
+            <div class="container">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">جزئیات وبلاگ</li>
+                </ol>
+            </div>
+        </nav>
+        <!--== End Page Header Area Wrapper ==-->
+
+        <!--== Start Blog Detail Area Wrapper ==-->
+        <section class="section-space pb-0">
+            <div class="container">
+                <div class="blog-detail">
+                    <h1 class="blog-detail-title">{{ info.title }}</h1>
+                    <div class="blog-detail-category">
+                        <a class="category" href="{{ info.category.get_absolute_url }}">{{ info.category }}</a>
+                        <!-- <a class="category" data-bg-color="#957AFF" href="blog.html">روش</a> -->
+                    </div>
+                    <img class="blog-detail-img mb-7 mb-lg-10" src="{{ info.image.url }}" width="1170" height="1012" alt="Image">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <ul class="blog-detail-meta">
+                                        <li class="meta-admin"><img src="{{ info.wr_image.url }}" style="width:70px;height:70px" alt="Image">{{ info.writer }}</li>
+                                        <li>{{ info.date }}</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="blog-detail-social">
+                                        <span>اشتراک گذاری:</span>
+                                        <a href="https://vesta.shop/blog-details/{{ info.id }}" target="_blank" rel="noopener" onclick="copyLink(event)"> <i class="fa fa-instagram"></i></a>
+                                        <a href="https://vesta.shop/blog-details/{{ info.id }}" target="_blank" rel="noopener" onclick="copyLink(event)"><i class="fa fa-twitter"></i></a>
+                                        <a href="https://vesta.shop/blog-details/{{ info.id }}" target="_blank" rel="noopener" onclick="copyLink(event)"><i class="fa fa-facebook"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="desc mt-4 mt-lg-7">{{ info.text|safe }}</p>
+                        </div>
+                    </div>
+
+
+                    <!-- <img class="blog-detail-img" src="files/images/blog/blog-detail2.webp" width="1170" height="700" alt="Image"> -->
+                
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <blockquote class="blog-detail-blockquote mt-6 mt-lg-10 mb-6 mb-lg-10">
+                                <p class="desc">گل و گیاه، دنیایی از زیبایی و آرامش در انتظار شماست. از شکوفه‌های پر رنگ گل‌ها و سبزه‌ها تا درختان قوی و باشکوه، هرچیزی درباره زمین و طبیعت را در اینجا پیدا می‌کنید. با ما همراه شوید و در قلب جادوی طبیعت، لحظات شگفت‌انگیزی را تجربه کنید. اینجا جاییست که خیالتان به همراه با آرامش و آرزوهایتان به واقعیت پیوسته‌اند. با گل و گیاه، شروعی جدید از زندگی را تجربه کنید و بهترین نتیجه را از زیستن با زیبایی و شادی بدست آورید.</p>
+                                <span class="user-name">توسط مومن د توماس</span>
+                                <img class="quote-icon" src="{% static 'img/quote1.webp' %}" width="84" height="60" alt="Icon">
+                            </blockquote>
+                        </div>
+                    </div>
+                   
+                </div>
+
+                <div class="section-space pb-0">
+                    <!--== Start Product Category Item ==-->
+                    <a href="/Producst_List" class="product-banner-item">
+                        <img src="{% static 'img/banner7.jpg' %}" width="1170" height="200" alt="Image-HasTech">
+                    </a>
+                    <!--== End Product Category Item ==-->
+                </div>
+
+                <div class="row justify-content-between align-items-center pt-10 mt-4 section-space">
+                    {% if Previous %}
+                    <div class="col-sm-6">
+                        <a href="{{ Previous.get_absolute_url }}" class="blog-next-previous">
+                            <div class="thumb">
+                                <span class="arrow">قبلی</span>
+                                <img src="{{ Previous.image.url }}" width="93" height="80" alt="Image">
+                            </div>
+                            <div class="content">
+                                <h4 class="title">{{ Previous.title }}</h4>
+                                <h5 class="post-date">{{ Previous.date }}</h5>
+                            </div>
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if next %}
+                    <div class="col-sm-6">
+                        <a href="{{ next.get_absolute_url }}" class="blog-next-previous blog-next">
+                            <div class="thumb">
+                                <span class="arrow">بعد</span>
+                                <img src="{{ next.image.url }}" width="93" height="80" alt="Image">
+                            </div>
+                            <div class="content">
+                                <h4 class="title">{{ next.title }}</h4>
+                                <h5 class="post-date">{{ next.date }}</h5>
+                            </div>
+                        </a>
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                <div class="blog-comment-form-wrap">
+                    <form action="" method="post">
+                        {% csrf_token %} 
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
+                                <h4 class="blog-comment-form-title">اظهار نظر</h4>
+                                <div class="blog-comment-form">
+                                    <img class="blog-comment-img" src="{% static 'img/profile2.png' %}" width="110" height="110" alt="Image">
+                                    <textarea name="message" class="blog-comment-control" placeholder="نظر خود را تایپ کنید"></textarea>
+                                    <input type="submit" class="btn" style="margin: 10px;" value="ثبت نظر">
+                                </div>
+                                <br>
+                                {% for x in CMN %}
+                                <br>
+                                <div class="blog-comment-form">
+                                    <img class="blog-comment-img" style="margin: 20px;" src="{% static 'img/profile.png' %}" width="60" height="110" alt="Image">
+                                    <p style="height: 150px;" class="blog-comment-control"><b>{{ x.massage }}</b></p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                
+            </div>
+        </section>
+   
+        <section class="section-space">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title text-center">
+                            <h2 class="title">پست های دیگر</h2>
+                            <p>برای خانم‌ها و آقایانی که قصد خرید محصولاتی عالی و اصلی را دارند و می‌خواهند </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-n9">
+
+                    {% for x in data|slice:"3" %}
+                    <div class="col-sm-6 col-lg-4 mb-8">
+                        <div class="post-item">
+                            <a href="{{ x.get_absolute_url }}" class="thumb">
+                                <img src="{{ x.image.url }}" width="370" style="height: 340px;" height="340" alt="Image-HasTech">
+                            </a>
+                            <div class="content">
+                                <a class="post-category" href="{{ x.category.get_absolute_url }}">{{ x.category }}</a>
+                                <h4 class="title"><a href="{{ x.get_absolute_url }}">{{ x.title }}</a></h4>
+                                <ul class="meta">
+                                    <li class="author-info"><span>توسط:</span> <a >{{ x.writer }}</a></li>
+                                    <li class="post-date">{{ x.date }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <section class="section-space pt-0">
+            <div class="container">
+                <div class="newsletter-content-wrap" data-bg-img="{% static 'img/back.webp' %}">
+                    <div class="newsletter-content">
+                        <div class="section-title mb-0">
+                            <h2 class="title">به ما بپیوند</h2>
+                            <p>برای اطلاع از تخفیف ها و جشنواره های وستا خاک عضو باشگاه مشتریان ما شوید </p>
+                        </div>
+                    </div>
+                    <div class="newsletter-form">
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="text" name="email_user" class="form-control" placeholder="شماره تلفن خود را وارد کنید...">
+                            <button class="btn-submit" type="submit"><i class="fa fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+
+
+
+
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+
+</div>
+
+{% endblock %}
+
+{% block inpage_js_link %}
+
+<script src="{% static 'img/modernizr-3.11.7.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/jquery-migrate-3.3.2.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/fancybox.min.js' %}"></script>
+<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+<script src="{% static 'js/range-slider.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}
+
+
+{% block inpage_js %}
+
+<script>
+    function copyLink(event) {
+      event.preventDefault();
+      var link = event.currentTarget.href;
+      navigator.clipboard.writeText(link)
+        .then(function() {
+          alert("لینک کپی شد: " + link);
+        })
+        .catch(function(error) {
+          alert("متاسفانه لینک کپی نشد. خطا: " + error);
+        });
+    }
+  </script>
+
+{% endblock %}
